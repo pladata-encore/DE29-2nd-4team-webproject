@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+<body>
+    <div class="signUpPage" id="signUpPage"> <!-- 회원가입 폼 -->
+        <form class="signUpForm" action="/api/v1/user/join" method="post" enctype="application/x-www-form-urlencoded"
+        >
+            <h2>회원가입</h2>
+            <input class="signUpNickname" type="text" name="nickname" placeholder="닉네임" required>
+            <input class="signUpEmail" type="email" name="email" placeholder="이메일" required>
+            <input class="signUpPassword" type="password" name="password" placeholder="비밀번호" required>
+            <input class="signUpPasswordCheck" type="password" name="passwordCheck" placeholder="비밀번호 확인" required>
+            <input class="signUpSubmit" type="submit" value="회원가입">
+        </form>
+    </div> 
+</body>
+</html>

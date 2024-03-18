@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Full Width Pics - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/static/css/mypage/styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
+    <link href="/static/css/mypage/styles.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* 사용자 사진 크기 조절 및 원형으로 만들기 */
+        .img-fluid.rounded-circle {
+            max-width: 150px;
+            /* 이미지의 최대 너비를 조절 */
+            max-height: 150px;
+            /* 이미지의 최대 높이를 조절하여 정사각형으로 만듬 */
+            height: auto;
+            /* 비율을 유지하기 위해 높이를 자동으로 설정 */
+            border-radius: 50%;
+            /* 이미지를 원형으로 만들기 */
+        }
+
+        @keyframes fadeInZoom {
+            from {
+                pacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fadeInZoom {
+            animation-name: fadeInZoom;
+            animation-duration: 2s;
+            /* 애니메이션 지속 시간 */
+            animation-fill-mode: both;
+            /* 애니메이션이 끝난 후 상태 유지 */
+        }
+
+        @keyframes fadeInBounce {
+        0% {
+            opacity: 0;
+            transform: scale(0);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.2); /* 중간에 약간 크게 만들어 '바운스' 효과를 줍니다. */
+        }
+        70% {
+            transform: scale(0.9); /* 바운스 되돌아오는 효과 */
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .fadeInBounce {
+        animation-name: fadeInBounce;
+        animation-duration: 4s; /* 지속 시간을 4초로 설정 */
+        animation-fill-mode: both;
+    }
+
+    header .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem; /* 필요에 따라 조절 */
+        }
+        
+        header .navbar .nav-item button {
+            margin-left: 8px; /* 버튼 간의 간격 */
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="#!">
+                    <img src="/static/img/mypage/basic.png" alt="My Page Logo" style="height:30px; margin-right: 10px;">My Page
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <button class="btn btn-primary" style="margin-right: 8px;" onclick="window.location.href = '/index';">Home</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-danger" id="logoutModalBtn" onclick=logout()>Logout</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <script>
+
+function logout() {
+            fetch(`/logout`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('로그아웃 실패');
+                    }
+                    // 로그아웃에 성공하면 홈페이지로 리디렉션
+                    window.location.href = '/';
+                })
+                .catch(error => {
+                    console.error('로그아웃 중 오류 발생:', error);
+                    // 오류가 발생한 경우 사용자에게 알림을 표시할 수 있습니다.
+                });
+        }
+    </script>
+    <!-- 로그아웃 모달 -->
+    <div id="logoutModal" class="modal">
+        <!-- 로그아웃 모달 내용 -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="logoutModalContent">
+                <p>로그아웃 하시겠습니까?</p>
+                <button class="btn btn-danger" id="confirmLogout">로그아웃</button>
+            </div>
+        </div>
+    </div>
+    <!-- Header - set the background image for the header in the line below-->
+    <header class="py-5 bg-image-full" style="background-image: url('/static/img/mypage/backimage.jpg')">
+        <div class="text-center my-5">
+            <img class="img-fluid rounded-circle mb-4" src="/static/img/mypage/profile.jpg" alt="Profile Image"> <!-- 여기에 > 추가 -->
+            <div>
+                <h1 class="text-black fs-3 fw-bolder">김백운</h1>
+                <p style="color: black; margin-bottom: 0;">qordns0615@naver.com</p>
+
+
+            </div>
+        </div>3
+    </header>
+    <!-- Content section-->
+    <section class="py-5">
+        <div class="container my-5">
+            <div class="text-center mb-5">
+                <h2>나의 활동</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">감정</h5>
+                            <p class="card-text" id="emotion-count">전체 감정 수 </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">글</h5>
+                            <p class="card-text" id="post-count">전체 글 수</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">최대감정</h5>
+                            <p class="card-text" id="comment-count">최대 감정 수</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Image element - set the background image for the header in the line below-->
+    <!-- Statistics graph container -->
+    <div class="container">
+        
+        <div class="row" style="justify-content: center;"> <!-- 중앙 정렬을 위한 스타일 -->
+            <!-- 주간 나의 감정 그래프 -->
+            <div class="col-md-6" style="display: flex; justify-content: center; align-items: center;">
+                <div style="width: 100%; max-width: 500px;"> <!-- 최대 너비를 400px로 제한 -->
+                    <h3>주간 나의 기분</h3>
+                    <canvas id="dailyEmotionChart"></canvas>
+                </div>
+            </div> 
+            <!-- 전체 나의 감정 그래프 -->
+            <div class="col-md-6" style="display: flex; justify-content: center; align-items: center;">
+                <div style="width: 100%; max-width: 300px;"> <!-- 최대 너비를 400px로 제한 -->
+                    <h3>전체 나의 기분</h3>
+                    <canvas id="overallEmotionChart"></canvas>
+                </div>
+            </div>
+        
+        </div>
+        <div class="row">
+            <!-- 연간 감정흐름 그래프 -->
+            <div class="col">
+                <h3>연간 나의 기분</h3>
+                <canvas id="trendChart"></canvas>
+            </div>
+        </div>
+    
+    <!-- Content section-->
+    <section class="py-5">
+        <div class="container my-5">
+            <div class="text-center mb-4">
+                <h2>내가 쓴 글</h2>
+            </div>
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-lg-2">
+                    <div class="card text-center">
+                        <div class="card-header bg-primary text-white">
+                            행복한 날
+                        </div>
+                        <div class="card-body">
+                            <img src="/static/img/mypage/happy.png" alt="행복" class="card-img-top">
+                            <a href="#" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="col-lg-2">
+                    <div class="card text-center">
+                        <div class="card-header bg-warning text-white">
+                            놀란 날
+                        </div>
+                        <div class="card-body">
+                            <img src="/static/img/mypage/suprise.png" alt="놀람" class="card-img-top">
+                            <a href="#" class="btn btn-warning">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="col-lg-2">
+                    <div class="card text-center">
+                        <div class="card-header bg-success text-white">
+                            보통의 날
+                        </div>
+                        <div class="card-body">
+                            <img src="/static/img/mypage/soso.png" alt="보통" class="card-img-top">
+                            <a href="#" class="btn btn-success">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="col-lg-2">
+                    <div class="card text-center">
+                        <div class="card-header bg-secondary text-white">
+                            슬픈 날
+                        </div>
+                        <div class="card-body">
+                            <img src="/static/img/mypage/sad.png" alt="슬픔" class="card-img-top">
+                            <a href="#" class="btn btn-secondary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="col-lg-2">
+                    <div class="card text-center">
+                        <div class="card-header bg-danger text-white">
+                            분노한 날
+                        </div>
+                        <div class="card-body">
+                            <img src="/static/img/mypage/angry.png" alt="분노" class="card-img-top">
+                            <a href="#" class="btn btn-danger">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Design By 김배꿍</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="/static/js/scripts.js"></script>
+</body>
+
+</html>

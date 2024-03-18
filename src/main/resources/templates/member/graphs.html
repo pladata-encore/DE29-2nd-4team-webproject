@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 이용자 분석 그래프</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .graph-container {
+            display: flex;
+            justify-content: center; /* 중앙 정렬 */
+            flex-wrap: wrap;
+        }
+        .graph {
+            flex-basis: 400px;
+            margin: 10px;
+        }
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="graph-container">
+    <div class="graph">
+        <h2>이번주 우리의 감정</h2>
+        <canvas id="dailyEmotionChart"></canvas>
+    </div>
+
+    <div class="graph">
+        <h2>오늘 우리의 감정</h2>
+        <canvas id="overallEmotionChart"></canvas>
+    </div>
+</div>
+
+<script>
+const colors = {
+    '행복': '#FDE56C',
+    '놀람': '#32B3D6',
+    '보통': '#8FE22F',
+    '슬픔': '#254EDB',
+    '분노': '#FC532D'
+};
+
+const dailyEmotionData = {
+    labels: ['월', '화', '수', '목', '금', '토', '일'],
+    datasets: [
+        {
+            label: '행복',
+            data: [2, 3, 4, 5, 3, 2, 4],
+            backgroundColor: colors['행복'],
+            stack: 'Stack 0',
+        },
+        {
+            label: '놀람',
+            data: [3, 2, 3, 2, 4, 2, 3],
+            backgroundColor: colors['놀람'],
+            stack: 'Stack 0',
+        },
+        {
+            label: '보통',
+            data: [4, 3, 4, 3, 3, 3, 4],
+            backgroundColor: colors['보통'],
+            stack: 'Stack 0',
+        },
+        {
+            label: '슬픔',
+            data: [1, 2, 1, 2, 2, 3, 1],
+            backgroundColor: colors['슬픔'],
+            stack: 'Stack 0',
+        },
+        {
+            label: '분노',
+            data: [2, 3, 2, 3, 2, 4, 2],
+            backgroundColor: colors['분노'],
+            stack: 'Stack 0',
+        }
+    ]
+};
+
+const overallEmotionData = {
+    labels: ['행복', '놀람', '보통', '슬픔', '분노'],
+    datasets: [{
+        data: [50, 10, 5, 25, 10],
+        backgroundColor: [
+            colors['행복'],
+            colors['놀람'],
+            colors['보통'],
+            colors['슬픔'],
+            colors['분노'],
+        ],
+    }]
+};
+
+const ctx1 = document.getElementById('dailyEmotionChart').getContext('2d');
+const dailyEmotionChart = new Chart(ctx1, {
+    type: 'bar',
+    data: dailyEmotionData,
+    options: {
+        scales: {
+            x: {
+                stacked: true,
+            },
+            y: {
+                stacked: true
+            }
+        }
+    }
+});
+
+const ctx2 = document.getElementById('overallEmotionChart').getContext('2d');
+const overallEmotionChart = new Chart(ctx2, {
+    type: 'doughnut',
+    data: overallEmotionData,
+});
+</script>
+
+</body>
+</html>

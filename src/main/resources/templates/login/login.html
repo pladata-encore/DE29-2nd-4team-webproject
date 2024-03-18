@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+    <body>
+        <div class="loginpage" id="loginPage"> <!-- 화면 중앙에 위치하기 위한 div 추가 -->
+            <form class="loginForm" action="/login" method="post">
+                <h2>로그인</h2>
+                <input class="loginText" type="text" name="username" placeholder="아이디" required>
+                <input class="loginPassword" type="password" name="password" placeholder="비밀번호" required>
+                <input class="loginSubmit" type="submit" value="로그인">
+                <button class="signup-button" onclick="openJoinPopup()">회원가입</button>
+                <script>
+                    function openJoinPopup() {
+                        var popup = window.open("http://localhost:8080/joinPage", "_self");
+                    }
+                </script>
+                <div class="social-login">
+                    <img src="/static/img/kakao.png" onclick="kakaoLogin()">
+                    <img src="/static/img/naver.png" onclick="naverLogin()">
+                    <img src="/static/img/google.png" onclick="googleLogin()">
+                </div>
+            </form>
+        
+        </div>    
+    </body>
+</html>
