@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <section id="section4">
+        <br><br><br>
+        <h2>와글와글 떠듭시당</h2>
+        <br>
+        <form class="comment-form" action="/api/v1/post/write" method="post" onsubmit="addAdditionalData(event)">
+            <textarea name="content" placeholder="와글와글 떠들어주세요!(500자까지만!)" maxlength="500" required></textarea><br>
+            <input type="submit" value="와글와글">
+            <span id="username" style="display: none;">{{username}}</span>
+
+        </form>
+
+        <div class="comment-list">
+            {{#postDtos}}
+            <div class="comment-content">
+                <p><span class="comment-author">작성자:</span>{{nickname}}</p>
+                <p>{{content}}</p>
+            </div>
+            <div class="comment-buttons">
+                <button>수정</button>
+                <button>삭제</button>
+            </div>
+            {{/postDtos}}
+        </div>
+
+    </section>
+</body>
+
+</html>
