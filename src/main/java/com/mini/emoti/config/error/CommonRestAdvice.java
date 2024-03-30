@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.view.RedirectView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +34,12 @@ public class CommonRestAdvice {
 
         return new ResponseEntity<>(error_msg, headers, status);
 
+    }
+
+    @ExceptionHandler(value = UserjoinException.class)
+    public RedirectView handleUserJoinException(UserjoinException ex) {
+        log.error("User join error: " + ex.getMessage());
+        return new RedirectView("/loginPage?error=" + ex.getMessage()); 
     }
 
     // 가장 일반적인 Exception 클래스를 처리
