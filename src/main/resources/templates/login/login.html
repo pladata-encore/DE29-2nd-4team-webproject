@@ -19,6 +19,11 @@
 </head>
 
 <body>
+    {{#error}}
+    <script type="text/javascript">
+        alert("{{errorMessage}}")
+    </script>
+    {{/error}}
     <div class="loginpage" id="loginPage"> <!-- 화면 중앙에 위치하기 위한 div 추가 -->
         <form class="loginForm" action="/login" method="post" onsubmit="showErrorPopup()">
         <!-- <form class="loginForm" action="/login" method="post"> -->

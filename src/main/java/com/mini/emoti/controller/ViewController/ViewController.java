@@ -40,8 +40,10 @@ public class ViewController {
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(@RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
         model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("error", error);
 
         return "login/login";
 
@@ -112,7 +114,6 @@ public class ViewController {
 
             e.printStackTrace();
         }
-
         if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
