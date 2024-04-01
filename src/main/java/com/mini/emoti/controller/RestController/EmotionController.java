@@ -72,7 +72,6 @@ public class EmotionController {
     public List<EmotionDto> findByEmailEmotion(@PathVariable("email") String email) throws Exception {
 
         return emotionService.findByEmailEmotion(email);
-
     }
 
     // 오늘 우리의 기분
