@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.mini.emoti.config.error.UserjoinException;
 import com.mini.emoti.model.dto.UserDto;
 import com.mini.emoti.service.UserService;
 
@@ -26,33 +27,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // @PostMapping("/join")
-    // public ResponseEntity<String> join(@RequestBody UserDto dto) {
-    // try {
-    // // UserService를 사용하여 유저 가입 처리
-    // userService.joinUser(dto);
-    // return ResponseEntity.ok().body("회원가입 성공");
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입
-    // 실패");
-    // }
-    // }
-
     // 회원가입
     @PostMapping("/join")
-    public RedirectView join(@ModelAttribute UserDto dto) {
-        log.info("[UserController][join] : " + dto.toString());
+    public RedirectView join(@ModelAttribute UserDto dto) throws UserjoinException, Exception {
+    log.info("[UserController][join] : " + dto.toString());
 
-        try {
-            userService.joinUser(dto);
-            // 회원가입이 성공했을 때 인덱스 페이지로 리다이렉션하고 성공 파라미터를 함께 전달
-            return new RedirectView("/loginPage?success=true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 에러 처리
-            return new RedirectView("/index");
-        }
+    userService.joinUser(dto);
+    return new RedirectView("/loginPage?success=true");
     }
 
     // 유저 조회

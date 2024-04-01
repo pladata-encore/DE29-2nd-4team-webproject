@@ -2,6 +2,8 @@ package com.mini.emoti.service;
 
 import com.mini.emoti.model.dto.UserDto;
 
+import jakarta.servlet.ServletException;
+
 public interface UserService {
 
     // 가입 insert
@@ -19,6 +21,6 @@ public interface UserService {
     public void deleteUser(String userName) throws Exception;
 
     // 로그인 성공시 >> 로그인 유무 저장
-    public void updateIsLoginByEmail(String email, Boolean isLogin) throws Exception;
+    public void updateIsLoginByEmail(String email, Boolean isLogin) throws ServletException;
 
 }
