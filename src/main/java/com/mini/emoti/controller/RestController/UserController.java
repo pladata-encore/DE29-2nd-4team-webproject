@@ -27,19 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // @PostMapping("/join")
-    // public ResponseEntity<String> join(@RequestBody UserDto dto) {
-    // try {
-    // // UserService를 사용하여 유저 가입 처리
-    // userService.joinUser(dto);
-    // return ResponseEntity.ok().body("회원가입 성공");
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입
-    // 실패");
-    // }
-    // }
-
     // 회원가입
     @PostMapping("/join")
     public RedirectView join(@ModelAttribute UserDto dto) throws UserjoinException, Exception {
