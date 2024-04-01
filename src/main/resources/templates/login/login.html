@@ -20,8 +20,8 @@
 
 <body>
     <div class="loginpage" id="loginPage"> <!-- 화면 중앙에 위치하기 위한 div 추가 -->
-        <!-- <form class="loginForm" action="/login" method="post" onsubmit="showErrorPopup('{errorMessage}')"> -->
-        <form class="loginForm" action="/login" method="post">
+        <form class="loginForm" action="/login" method="post" onsubmit="showErrorPopup()">
+        <!-- <form class="loginForm" action="/login" method="post"> -->
 
             <h2>로그인</h2>
             <div class="input-wrapper">
@@ -35,10 +35,14 @@
                 포해야합니다.</div>
             <input class="loginSubmit" type="submit" value="로그인" id="loginButton" disabled>
             <button class="signup-button" onclick="openJoinPopup()">회원가입</button>
+            
             <script>
-
-                function showErrorPopup(errorMessage) {
+                function showErrorPopup() {
                     // 실패한 이유가 있는 경우에만 팝업 창을 띄웁니다.
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const errorMessage = urlParams.get('errorMessage');
+                    console.log("showErrorPopup : "+errorMessage)
+
                     if (errorMessage) {
                         // URL 디코딩하여 에러 메시지 표시
                         var decodedMessage = decodeURIComponent(errorMessage);

@@ -32,14 +32,8 @@ public class LoginAuthSuccessHandelr extends SimpleUrlAuthenticationSuccessHandl
         // 로그인 성공시, 로그인 유무 저장
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        try { // exception 제거 필요
-            userService.updateIsLoginByEmail(userDetails.getUsername(), true);
-            // response.sendRedirect("");
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
+        userService.updateIsLoginByEmail(userDetails.getUsername(), true);
+   
         // index 페이지로 이동
         // String redirectUrl = "/user/index?login_success=true";
         String redirectUrl = "/close";

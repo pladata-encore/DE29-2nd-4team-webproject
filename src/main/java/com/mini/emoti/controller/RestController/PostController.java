@@ -31,25 +31,28 @@ public class PostController {
     @PostMapping("/write")
     public List<Map<String, Object>> writePost(@Valid @ModelAttribute PostDto dto) {
 
-        List<Map<String, Object>> responseData = postService.writePost(dto);
-        log.info("writePost responseData : " + responseData);
-        return responseData;
-    }
+        List<Map<String, Object>> responseData;
+        try {
+            responseData = postService.writePost(dto);
+            return responseData;
 
-    // 게시글 삭제
-    // @PostMapping("/delete/{postId}")
-    // public ResponseEntity<String> deletePost(@PathVariable("postId") Long postId)
-    // {
-    // log.info("[deletePost1] : " + postId);
-    // postService.deletePost(postId);
-    // log.info("[deletePost2] : " + postId);
-    // return ResponseEntity.ok().body("{\"message\": \"삭제 성공\"}");
-    // }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+        // log.info("writePost responseData : " + responseData);
+    }
 
     @PostMapping("/delete")
     public ResponseEntity<String> deletePost(@RequestBody PostDto postDto) {
         log.info("[deletePost1] : " + postDto.getPostId());
-        postService.deletePost(postDto.getPostId());
+        try {
+            postService.deletePost(postDto.getPostId());
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return ResponseEntity.ok().body("{\"message\": \"삭제 성공\"}");
     }
 
@@ -57,7 +60,12 @@ public class PostController {
     @PostMapping("/update/{postId}")
     public ResponseEntity<String> updatePost(@Valid @RequestBody PostDto dto,
             @PathVariable("postId") Long postId) {
-        postService.updatePost(dto, postId);
+        try {
+            postService.updatePost(dto, postId);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         return ResponseEntity.ok().body("{\"message\": \"수정 성공\"}");
     }
@@ -65,17 +73,16 @@ public class PostController {
     // 게시글 조회G
     @GetMapping("/view/{postid}")
     public PostDto findById(@PathVariable("postId") Long postId) {
-        PostDto dto = postService.findById(postId);
-        return dto;
+        PostDto dto;
+        try {
+            dto = postService.findById(postId);
+            return dto;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
     }
-
-    // // 전체 게시글 조회
-    // @GetMapping("/all")
-    // public List<Map<String, Object>> getAllPost() {
-
-    // List<Map<String, Object>> allPosts = postService.getAllPost();
-    // log.info("[PostResrController][getAllPost] : " + allPosts);
-    // return allPosts;
-    // }
-
 }

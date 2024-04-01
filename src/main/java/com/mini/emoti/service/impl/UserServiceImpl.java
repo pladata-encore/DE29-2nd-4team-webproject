@@ -10,6 +10,7 @@ import com.mini.emoti.model.dto.UserDto;
 import com.mini.emoti.model.entity.UserEntity;
 import com.mini.emoti.service.UserService;
 
+import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -23,12 +24,19 @@ public class UserServiceImpl implements UserService {
 
     // 로그인 성공시 >> 로그인 유무 저장
     @Override
-    public void updateIsLoginByEmail(String email, Boolean isLogin) throws Exception {
+    public void updateIsLoginByEmail(String email, Boolean isLogin) throws ServletException {
         // TODO Auto-generated method stub
-        UserEntity entity = userDao.findByEmail(email);
-        log.info("[UserServiceImpl][updateIsLoginByEmail] " + email + " / " + entity);
-        entity.setIsLogin(isLogin);
-        userDao.updateIsLoginByEmail(entity);
+        UserEntity entity;
+        try {
+            entity = userDao.findByEmail(email);
+            log.info("[UserServiceImpl][updateIsLoginByEmail] " + email + " / " + entity);
+            entity.setIsLogin(isLogin);
+            userDao.updateIsLoginByEmail(entity);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
     @Override

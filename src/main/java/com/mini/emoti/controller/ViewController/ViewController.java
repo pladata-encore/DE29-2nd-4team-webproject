@@ -92,7 +92,9 @@ public class ViewController {
         if (authentication == null) {
             return "redirect:/index";
         }
-        List<PostDto> postDtos = postService.viewAllPost();
+        List<PostDto> postDtos;
+        try {
+            postDtos = postService.viewAllPost();
 
         if (!postDtos.isEmpty()) {
             log.info("[PostController][viewPost] postDtos : " + postDtos);
@@ -102,6 +104,14 @@ public class ViewController {
         }
 
         model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            model.addAttribute("postDtos", null);
+            model.addAttribute("postLength", null);
+
+            e.printStackTrace();
+        }
 
         if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();

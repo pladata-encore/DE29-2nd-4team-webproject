@@ -27,19 +27,27 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deletePost(Long postId) {
-        postDao.deletePost(postId);
-
-        // TODO Auto-generated method stub
-
+        try {
+            postDao.deletePost(postId);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void updatePost(PostDto dto, Long postId) {
         // TODO Auto-generated method stub
-        PostEntity postEntity = postDao.findById(postId);
-        postEntity.setContent(dto.getContent());
+        PostEntity postEntity;
+        try {
+            postEntity = postDao.findById(postId);
+            postEntity.setContent(dto.getContent());
 
-        postDao.updatePost(postEntity);
+            postDao.updatePost(postEntity);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
@@ -51,66 +59,84 @@ public class PostServiceImpl implements PostService {
             entity.setContent(dto.getContent());
             entity.setHateCount(dto.getHateCnt());
             entity.setLikeCount(dto.getLikeCnt());
-            entity.setUsers(userDao.findByEmail(dto.getEmail()));
-
-            Long postId = postDao.writePost(entity);
-
-            List<Map<String, Object>> responseData = new ArrayList<>();
-
-            Map<String, Object> data = new HashMap<>();
             try {
+                entity.setUsers(userDao.findByEmail(dto.getEmail()));
+                Long postId = postDao.writePost(entity);
+
+                List<Map<String, Object>> responseData = new ArrayList<>();
+
+                Map<String, Object> data = new HashMap<>();
                 String nickname = userDao.findByEmail(dto.getEmail()).getNickname();
                 data.put("nickname", nickname);
+
+                data.put("content", dto.getContent());
+                data.put("postId", postId);
+                // data.put("email", dto.getEmail());
+
+                responseData.add(data);
+                log.info("[PostServiceImpl][writePost] : " + responseData);
+                return responseData;
             } catch (Exception e) {
-                data.put("nickname", null);
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            data.put("content", dto.getContent());
-            data.put("postId", postId);
-            // data.put("email", dto.getEmail());
 
-            responseData.add(data);
-            log.info("[PostServiceImpl][writePost] : " + responseData);
-            return responseData;
-        } else {
-            return null;
-        }
+       }
+       
+       return null;
 
     }
 
     @Override
     public PostDto findById(Long postId) {
-        PostEntity postEntity = postDao.findById(postId);
-        PostDto postDto = new PostDto();
-        postDto.setContent(postEntity.getContent());
-        postDto.setCreatedDate(postDto.getCreatedDate());
-        postDto.setEmail(postEntity.getUsers().getEmail());
-        postDto.setNickname(postEntity.getUsers().getNickname());
+        PostEntity postEntity;
+        try {
+            postEntity = postDao.findById(postId);
+            PostDto postDto = new PostDto();
+            postDto.setContent(postEntity.getContent());
+            postDto.setCreatedDate(postDto.getCreatedDate());
+            postDto.setEmail(postEntity.getUsers().getEmail());
+            postDto.setNickname(postEntity.getUsers().getNickname());
+            return postDto;
 
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
         // TODO Auto-generated method stub
-        return postDto;
     }
 
     @Override
     public List<PostDto> viewAllPost() {
         // TODO Auto-generated method stub
-        List<PostEntity> postEntityList = postDao.getAllPost();
-        List<PostDto> postDtoList = new ArrayList<>();
-        for (int i = 0; i < postEntityList.size(); i++) {
-            PostDto dto = new PostDto();
-            dto.setPostId(postEntityList.get(i).getPostId());
-            dto.setCreatedDate(postEntityList.get(i).getCreatedDate());
-            dto.setContent(postEntityList.get(i).getContent());
-            dto.setHateCnt(postEntityList.get(i).getHateCount());
-            dto.setLikeCnt(postEntityList.get(i).getLikeCount());
-            dto.setEmail(postEntityList.get(i).getUsers().getEmail());
-            dto.setNickname(postEntityList.get(i).getUsers().getNickname());
-
-            postDtoList.add(dto);
-
+        List<PostEntity> postEntityList;
+        try {
+            postEntityList = postDao.getAllPost();
+            List<PostDto> postDtoList = new ArrayList<>();
+            for (int i = 0; i < postEntityList.size(); i++) {
+                PostDto dto = new PostDto();
+                dto.setPostId(postEntityList.get(i).getPostId());
+                dto.setCreatedDate(postEntityList.get(i).getCreatedDate());
+                dto.setContent(postEntityList.get(i).getContent());
+                dto.setHateCnt(postEntityList.get(i).getHateCount());
+                dto.setLikeCnt(postEntityList.get(i).getLikeCount());
+                dto.setEmail(postEntityList.get(i).getUsers().getEmail());
+                dto.setNickname(postEntityList.get(i).getUsers().getNickname());
+    
+                postDtoList.add(dto);
+                return postDtoList;
+    
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
-        return postDtoList;
+        return null;
+    
+
     }
 
 }
