@@ -41,7 +41,7 @@ public class LoginAuthFailureHandler extends SimpleUrlAuthenticationFailureHandl
         errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); /*
                                                                   * 한글 인코딩 깨진 문제 방지
                                                                   */
-        setDefaultFailureUrl("/loginPage?error=true&errorMessage=" + errorMessage);
+        setDefaultFailureUrl("/loginPage?errorMessage=" + errorMessage);
 
     }
 

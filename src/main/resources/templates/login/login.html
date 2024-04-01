@@ -19,13 +19,13 @@
 </head>
 
 <body>
-    {{#error}}
+    {{#errorMessage}}
     <script type="text/javascript">
         alert("{{errorMessage}}")
     </script>
-    {{/error}}
+    {{/errorMessage}}
     <div class="loginpage" id="loginPage"> <!-- 화면 중앙에 위치하기 위한 div 추가 -->
-        <form class="loginForm" action="/login" method="post" onsubmit="showErrorPopup()">
+        <form class="loginForm" action="/login" method="post">
         <!-- <form class="loginForm" action="/login" method="post"> -->
 
             <h2>로그인</h2>
@@ -42,18 +42,7 @@
             <button class="signup-button" onclick="openJoinPopup()">회원가입</button>
             
             <script>
-                function showErrorPopup() {
-                    // 실패한 이유가 있는 경우에만 팝업 창을 띄웁니다.
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const errorMessage = urlParams.get('errorMessage');
-                    console.log("showErrorPopup : "+errorMessage)
-
-                    if (errorMessage) {
-                        // URL 디코딩하여 에러 메시지 표시
-                        var decodedMessage = decodeURIComponent(errorMessage);
-                        alert(decodedMessage); // 에러 메시지를 경고창으로 표시합니다.
-                    }
-                }
+       
                 function openJoinPopup() {
                     var popup = window.open("http://localhost:8080/joinPage", "_self");
                 }

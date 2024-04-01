@@ -40,10 +40,9 @@ public class ViewController {
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(@RequestParam(value = "error", required = false) String error,
+    public String loginPage(
             @RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
         model.addAttribute("errorMessage", errorMessage);
-        model.addAttribute("error", error);
 
         return "login/login";
 
