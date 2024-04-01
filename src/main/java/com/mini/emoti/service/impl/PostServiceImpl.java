@@ -26,117 +26,91 @@ public class PostServiceImpl implements PostService {
     private UserDao userDao;
 
     @Override
-    public void deletePost(Long postId) {
-        try {
-            postDao.deletePost(postId);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void deletePost(Long postId) throws Exception {
+
+        postDao.deletePost(postId);
+
     }
 
     @Override
-    public void updatePost(PostDto dto, Long postId) {
+    public void updatePost(PostDto dto, Long postId) throws Exception {
         // TODO Auto-generated method stub
         PostEntity postEntity;
-        try {
-            postEntity = postDao.findById(postId);
-            postEntity.setContent(dto.getContent());
 
-            postDao.updatePost(postEntity);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        postEntity = postDao.findById(postId);
+        postEntity.setContent(dto.getContent());
+
+        postDao.updatePost(postEntity);
 
     }
 
     @Override
-    public List<Map<String, Object>> writePost(PostDto dto) {
+    public List<Map<String, Object>> writePost(PostDto dto) throws Exception {
         // TODO Auto-generated method stub
         if (dto != null) {
             PostEntity entity = new PostEntity();
             entity.setContent(dto.getContent());
             entity.setHateCount(dto.getHateCnt());
             entity.setLikeCount(dto.getLikeCnt());
-            try {
-                entity.setUsers(userDao.findByEmail(dto.getEmail()));
-                Long postId = postDao.writePost(entity);
 
-                List<Map<String, Object>> responseData = new ArrayList<>();
+            entity.setUsers(userDao.findByEmail(dto.getEmail()));
+            Long postId = postDao.writePost(entity);
 
-                Map<String, Object> data = new HashMap<>();
-                String nickname = userDao.findByEmail(dto.getEmail()).getNickname();
-                data.put("nickname", nickname);
+            List<Map<String, Object>> responseData = new ArrayList<>();
 
-                data.put("content", dto.getContent());
-                data.put("postId", postId);
-                // data.put("email", dto.getEmail());
+            Map<String, Object> data = new HashMap<>();
+            String nickname = userDao.findByEmail(dto.getEmail()).getNickname();
+            data.put("nickname", nickname);
 
-                responseData.add(data);
-                log.info("[PostServiceImpl][writePost] : " + responseData);
-                return responseData;
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            data.put("content", dto.getContent());
+            data.put("postId", postId);
+            // data.put("email", dto.getEmail());
 
-       }
-       
-       return null;
+            responseData.add(data);
+            log.info("[PostServiceImpl][writePost] : " + responseData);
+            return responseData;
 
-    }
-
-    @Override
-    public PostDto findById(Long postId) {
-        PostEntity postEntity;
-        try {
-            postEntity = postDao.findById(postId);
-            PostDto postDto = new PostDto();
-            postDto.setContent(postEntity.getContent());
-            postDto.setCreatedDate(postDto.getCreatedDate());
-            postDto.setEmail(postEntity.getUsers().getEmail());
-            postDto.setNickname(postEntity.getUsers().getNickname());
-            return postDto;
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         return null;
-        // TODO Auto-generated method stub
+
     }
 
     @Override
-    public List<PostDto> viewAllPost() {
+    public PostDto findById(Long postId) throws Exception {
+        PostEntity postEntity;
+
+        postEntity = postDao.findById(postId);
+        PostDto postDto = new PostDto();
+        postDto.setContent(postEntity.getContent());
+        postDto.setCreatedDate(postDto.getCreatedDate());
+        postDto.setEmail(postEntity.getUsers().getEmail());
+        postDto.setNickname(postEntity.getUsers().getNickname());
+        return postDto;
+
+    }
+
+    @Override
+    public List<PostDto> viewAllPost() throws Exception {
         // TODO Auto-generated method stub
         List<PostEntity> postEntityList;
-        try {
-            postEntityList = postDao.getAllPost();
-            List<PostDto> postDtoList = new ArrayList<>();
-            for (int i = 0; i < postEntityList.size(); i++) {
-                PostDto dto = new PostDto();
-                dto.setPostId(postEntityList.get(i).getPostId());
-                dto.setCreatedDate(postEntityList.get(i).getCreatedDate());
-                dto.setContent(postEntityList.get(i).getContent());
-                dto.setHateCnt(postEntityList.get(i).getHateCount());
-                dto.setLikeCnt(postEntityList.get(i).getLikeCount());
-                dto.setEmail(postEntityList.get(i).getUsers().getEmail());
-                dto.setNickname(postEntityList.get(i).getUsers().getNickname());
-    
-                postDtoList.add(dto);
-                return postDtoList;
-    
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+        postEntityList = postDao.getAllPost();
+        List<PostDto> postDtoList = new ArrayList<>();
+        for (int i = 0; i < postEntityList.size(); i++) {
+            PostDto dto = new PostDto();
+            dto.setPostId(postEntityList.get(i).getPostId());
+            dto.setCreatedDate(postEntityList.get(i).getCreatedDate());
+            dto.setContent(postEntityList.get(i).getContent());
+            dto.setHateCnt(postEntityList.get(i).getHateCount());
+            dto.setLikeCnt(postEntityList.get(i).getLikeCount());
+            dto.setEmail(postEntityList.get(i).getUsers().getEmail());
+            dto.setNickname(postEntityList.get(i).getUsers().getNickname());
+
+            postDtoList.add(dto);
+
         }
-
-        return null;
-    
-
+        return postDtoList;
     }
 
 }
