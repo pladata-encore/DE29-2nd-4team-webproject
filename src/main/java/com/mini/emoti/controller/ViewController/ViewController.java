@@ -87,7 +87,7 @@ public class ViewController {
     }
 
     @GetMapping("user/view/all")
-    public String viewPost(Model model, Authentication authentication) {
+    public String viewPost(Model model, Authentication authentication) throws Exception {
         log.info("[PostController][viewPost] start");
         if (authentication == null) {
             return "redirect:/index";
@@ -96,14 +96,14 @@ public class ViewController {
         try {
             postDtos = postService.viewAllPost();
 
-        if (!postDtos.isEmpty()) {
-            log.info("[PostController][viewPost] postDtos : " + postDtos);
+            if (!postDtos.isEmpty()) {
+                log.info("[PostController][viewPost] postDtos : " + postDtos);
 
-            model.addAttribute("postDtos", postDtos);
+                model.addAttribute("postDtos", postDtos);
 
-        }
+            }
 
-        model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
+            model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block

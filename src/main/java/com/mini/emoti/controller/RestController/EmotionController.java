@@ -26,30 +26,19 @@ public class EmotionController {
 
     // localhost:8080/api/v1/emotion/insert
     @PostMapping("/insert")
-    public String isertEmotion(@RequestBody EmotionDto dto) {
-        try {
-            emotionService.isertEmotion(dto);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public String isertEmotion(@RequestBody EmotionDto dto) throws Exception {
+        emotionService.isertEmotion(dto);
         return "저장 성공";
     }
 
     // 감정 조회
     // localhost:8080/api/v1/emotion/find/{emotionId}
     @GetMapping("/find/{emotionId}")
-    public EmotionDto findByEmotionId(@PathVariable("emotionId") Long emotionId) {
+    public EmotionDto findByEmotionId(@PathVariable("emotionId") Long emotionId) throws Exception {
         EmotionDto dto;
-        try {
-            dto = emotionService.findByEmotionId(emotionId);
-            return dto;
 
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
+        dto = emotionService.findByEmotionId(emotionId);
+        return dto;
 
         // return dto.toString();
     }
@@ -57,125 +46,70 @@ public class EmotionController {
     // 감정 삭제
     // localhost:8080/api/v1/emotion/delete/{emotionId}
     @DeleteMapping("/delete/{emotionId}")
-    public String deleteEmotion(@PathVariable("emotionId") Long emotionId) {
-        try {
-            emotionService.deleteEmotion(emotionId);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public String deleteEmotion(@PathVariable("emotionId") Long emotionId) throws Exception {
+        emotionService.deleteEmotion(emotionId);
         return "삭제 성공";
     }
 
     // localhost:8080/api/v1/emotion/update
     @PostMapping("/update")
-    public String updateEmotion(@RequestBody EmotionDto dto) {
-        try {
-            emotionService.updateEmotion(dto);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public String updateEmotion(@RequestBody EmotionDto dto) throws Exception {
+
+        emotionService.updateEmotion(dto);
         return "수정 성공";
     }
 
     // 모든 감정 데이터 조회
     @GetMapping("/all")
-    public List<EmotionDto> findAllEmotion() {
-        try {
-            return emotionService.findAllEmotion();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public List<EmotionDto> findAllEmotion() throws Exception {
 
-        return null;
+        return emotionService.findAllEmotion();
 
     }
 
     // 유저별 감정 데이터 조회
     @GetMapping("/user/{email}")
-    public List<EmotionDto> findByEmailEmotion(@PathVariable("email") String email) {
+    public List<EmotionDto> findByEmailEmotion(@PathVariable("email") String email) throws Exception {
 
-        try {
-            return emotionService.findByEmailEmotion(email);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return null;
+        return emotionService.findByEmailEmotion(email);
 
     }
 
     // 오늘 우리의 기분
     @GetMapping("/today")
-    public List<Object[]> getTodayEmotions() {
-        try {
-            // log.info("emotionService : " + emotionService.getTodayEmotions());
-            return emotionService.getTodayEmotions();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public List<Object[]> getTodayEmotions() throws Exception {
 
-        return null;
+        // log.info("emotionService : " + emotionService.getTodayEmotions());
+        return emotionService.getTodayEmotions();
     }
 
     // 주간 우리의 기분 (7일)
     @GetMapping("/last/weekly")
-    public List<Object[]> getLastWeeklyEmotions() {
-        // TODO Auto-generated method stub
-        try {
-            return emotionService.getLastWeeklyEmotions();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public List<Object[]> getLastWeeklyEmotions() throws Exception {
 
-        return null;
+        return emotionService.getLastWeeklyEmotions();
     }
 
     // 주별 우리의 기분 (7일)
     @GetMapping("/weekly")
-    public List<Object[]> getWeeklyEmotions() {
+    public List<Object[]> getWeeklyEmotions() throws Exception {
 
-        try {
-            return emotionService.getWeeklyEmotions();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return null;
+        return emotionService.getWeeklyEmotions();
     }
 
     // 그룹별 가장 많은 감정데이터 - 전체
     @GetMapping("/most/group")
-    public List<Object[]> getMostEmotionType() {
-        // TODO Auto-generated method stub
-        try {
-            return emotionService.getMostEmotionType();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public List<Object[]> getMostEmotionType() throws Exception {
 
-        return null;
+        return emotionService.getMostEmotionType();
     }
 
     // 개인별 가장 많은 감정데이터 - 개인
     @GetMapping("/most/member/{email}")
-    public List<Object[]> getMostEmotionTypeByUser(@PathVariable("email") String email) {
-        // TODO Auto-generated method stub
-        try {
-            return emotionService.getMostEmotionTypeByUser(email);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public List<Object[]> getMostEmotionTypeByUser(@PathVariable("email") String email) throws Exception {
 
-        return null;
+        return emotionService.getMostEmotionTypeByUser(email);
+
     }
 
 }

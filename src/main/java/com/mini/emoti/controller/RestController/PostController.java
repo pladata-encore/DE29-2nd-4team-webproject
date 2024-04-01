@@ -29,7 +29,7 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/write")
-    public List<Map<String, Object>> writePost(@Valid @ModelAttribute PostDto dto) {
+    public List<Map<String, Object>> writePost(@Valid @ModelAttribute PostDto dto) throws Exception {
 
         List<Map<String, Object>> responseData;
         try {
@@ -45,44 +45,29 @@ public class PostController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<String> deletePost(@RequestBody PostDto postDto) {
+    public ResponseEntity<String> deletePost(@RequestBody PostDto postDto) throws Exception {
         log.info("[deletePost1] : " + postDto.getPostId());
-        try {
-            postService.deletePost(postDto.getPostId());
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
+        postService.deletePost(postDto.getPostId());
         return ResponseEntity.ok().body("{\"message\": \"삭제 성공\"}");
     }
 
     // 게시글 수정
     @PostMapping("/update/{postId}")
     public ResponseEntity<String> updatePost(@Valid @RequestBody PostDto dto,
-            @PathVariable("postId") Long postId) {
-        try {
-            postService.updatePost(dto, postId);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+            @PathVariable("postId") Long postId) throws Exception {
+
+        postService.updatePost(dto, postId);
 
         return ResponseEntity.ok().body("{\"message\": \"수정 성공\"}");
     }
 
     // 게시글 조회G
     @GetMapping("/view/{postid}")
-    public PostDto findById(@PathVariable("postId") Long postId) {
+    public PostDto findById(@PathVariable("postId") Long postId) throws Exception {
         PostDto dto;
-        try {
-            dto = postService.findById(postId);
-            return dto;
 
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return null;
+        dto = postService.findById(postId);
+        return dto;
     }
 }
