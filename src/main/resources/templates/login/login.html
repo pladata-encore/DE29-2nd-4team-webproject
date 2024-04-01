@@ -19,10 +19,17 @@
 </head>
 
 <body>
+    {{#error}}
+    <script type="text/javascript">
+        alert("{{errorMessage}}");
+    </script>
+    {{/error}}
     <div class="loginpage" id="loginPage"> <!-- 화면 중앙에 위치하기 위한 div 추가 -->
-        <!-- <form class="loginForm" action="/login" method="post" onsubmit="showErrorPopup('{errorMessage}')"> -->
-        <form class="loginForm" action="/login" method="post">
 
+        <!-- <form class="loginForm" action="/login" method="post"
+            onsubmit="showErrorPopup('{errorMessage}')"> -->
+
+        <form class="loginForm" action="/login" method="post">
             <h2>로그인</h2>
             <div class="input-wrapper">
                 <input class="loginText" id="usernameInput" type="text" name="username" placeholder="아이디" required
@@ -31,7 +38,8 @@
             </div>
             <input class="loginPassword" id="passwordInput" type="password" name="password" placeholder="비밀번호" required
                 oninput="validatePassword(this)">
-            <div class="error-message" id="passwordErrorMessage" style="margin-bottom: 5px;">비밀번호는 적어도 하나의 영문자와 하나의 숫자를
+            <div class="error-message" id="passwordErrorMessage" style="margin-bottom: 5px;">비밀번호는 적어도 하나의 영문자와 하나의
+                숫자를
                 포해야합니다.</div>
             <input class="loginSubmit" type="submit" value="로그인" id="loginButton" disabled>
             <button class="signup-button" onclick="openJoinPopup()">회원가입</button>

@@ -40,9 +40,11 @@ public class ViewController {
     }
 
     @GetMapping("/loginPage")
-    public String loginPage(@RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
+        log.info("로그인겟메핑");
+        model.addAttribute("error", error);
         model.addAttribute("errorMessage", errorMessage);
-
         return "login/login";
 
     }
