@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    {{#error}}
+    <script type="text/javascript">
+        console.log("error : {{error}}")
+        alert("회원가입에 실패했습니다")
+    </script>
+    {{/error}}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -20,7 +27,7 @@
 
 <body>
     <div class="signUpPage" id="signUpPage"> <!-- 회원가입 폼 -->
-        <form class="signUpForm" action="/api/v1/user/join" method="post" enctype="application/x-www-form-urlencoded">
+        <form class="signUpForm" action="/api/v1/join" method="post" enctype="application/x-www-form-urlencoded">
             <h2>회원가입</h2>
             <div class="input-wrapper">
                 <input class="signUpNickname" id="nicknameInput" type="text" name="nickname" placeholder="닉네임" required

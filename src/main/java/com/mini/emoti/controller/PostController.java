@@ -1,4 +1,4 @@
-package com.mini.emoti.controller.RestController;
+package com.mini.emoti.controller;
 
 import java.util.List;
 import java.util.Map;

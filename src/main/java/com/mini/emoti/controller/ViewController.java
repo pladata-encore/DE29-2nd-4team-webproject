@@ -1,4 +1,4 @@
-package com.mini.emoti.controller.ViewController;
+package com.mini.emoti.controller;
 
 import java.util.List;
 
@@ -29,6 +29,7 @@ public class ViewController {
      * 누구나 접근 가능
      */
 
+     
     @GetMapping("/index")
     public String index(Authentication authentication, Model model) {
         if (authentication != null) {
@@ -47,6 +48,7 @@ public class ViewController {
         return "login/login";
 
     }
+
 
     @GetMapping("/joinPage")
     public String joinPage(Model model) {

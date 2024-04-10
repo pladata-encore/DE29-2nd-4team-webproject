@@ -1,7 +1,8 @@
-package com.mini.emoti.controller.RestController;
+package com.mini.emoti.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,27 +20,27 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/api/v1/user")
-public class UserController {
+public class UserApiController {
 
     @Autowired
     private UserService userService;
     
-    // 회원가입
-    @PostMapping("/join")
-    public RedirectView join(@ModelAttribute UserDto dto) throws Exception {
-        log.info("[UserController][join] : " + dto.toString());
-        try {
-            userService.joinUser(dto);
-            // 회원가입이 성공했을 때 인덱스 페이지로 리다이렉션하고 성공 파라미터를 함께 전달
-            return new RedirectView("/loginPage?success=true");
-        } catch (Exception e) {
-            e.printStackTrace();
-            // 에러 처리
-            return new RedirectView("/index");
-        }
-    }
+    // // 회원가입
+    // @PostMapping("/join")
+    // public RedirectView join(@ModelAttribute UserDto dto) throws Exception {
+    //     log.info("[UserController][join] : " + dto.toString());
+    //     try {
+    //         userService.joinUser(dto);
+    //         // 회원가입이 성공했을 때 인덱스 페이지로 리다이렉션하고 성공 파라미터를 함께 전달
+    //         return new RedirectView("/loginPage?success=true");
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         // 에러 처리
+    //         return new RedirectView("/index");
+    //     }
+    // }
 
     // 유저 조회
     // localhost:8080/api/v1/user/{userName}
