@@ -3,6 +3,7 @@ package com.mini.emoti.model.entity;
 import java.util.List;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.mini.emoti.config.BaseEntity;
 
@@ -34,7 +35,6 @@ public class UserEntity extends BaseEntity {
     @Id
     @NotBlank
     @Email(message = "올바른 이메일 형식이 아닙니다.")
-    // @Column(unique = true)
     private String email; // ID
 
     // nickname

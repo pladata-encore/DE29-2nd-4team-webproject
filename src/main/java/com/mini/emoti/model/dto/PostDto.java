@@ -2,6 +2,7 @@ package com.mini.emoti.model.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,11 @@ public class PostDto {
     private String email;
     private String nickname;
     private String content;
+
+    @PositiveOrZero
     private int likeCnt;
+
+    @PositiveOrZero
     private int hateCnt;
     private LocalDateTime createdDate;
 }
