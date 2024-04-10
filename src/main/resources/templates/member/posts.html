@@ -12,7 +12,7 @@
         <br><br><br>
         <h2>와글와글 떠듭시당</h2>
         <br>
-        <form class="comment-form" action="/api/v1/post/write" method="post" onsubmit="addAdditionalData(event)">
+        <form class="comment-form" action="/api/v1/user/post/write" method="post" onsubmit="addAdditionalData(event)">
             <textarea name="content" placeholder="와글와글 떠들어주세요!(500자까지만!)" maxlength="500" required></textarea><br>
             <input type="submit" value="와글와글">
             <span id="username" style="display: none;">{{username}}</span>

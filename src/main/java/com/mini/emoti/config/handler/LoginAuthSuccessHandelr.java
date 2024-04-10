@@ -34,8 +34,6 @@ public class LoginAuthSuccessHandelr extends SimpleUrlAuthenticationSuccessHandl
 
         userService.updateIsLoginByEmail(userDetails.getUsername(), true);
    
-        // index 페이지로 이동
-        // String redirectUrl = "/user/index?login_success=true";
         String redirectUrl = "/close";
 
         response.sendRedirect(redirectUrl);

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mini.emoti.model.dto.PostDto;
 import com.mini.emoti.service.PostService;
@@ -16,65 +16,21 @@ import com.mini.emoti.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
-public class ViewController {
-
+@Slf4j
+@RequestMapping("user/")
+public class UserController {
     @Autowired
     private PostService postService;
+
     @Autowired
     private UserService userService;
-
-    /*
-     * 누구나 접근 가능
-     */
-
-     
-    @GetMapping("/index")
-    public String index(Authentication authentication, Model model) {
-        if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            model.addAttribute("username", userDetails.getUsername());
-        }
-
-        return "index";
-    }
-
-    @GetMapping("/loginPage")
-    public String loginPage(
-            @RequestParam(value = "errorMessage", required = false) String errorMessage, Model model) {
-        model.addAttribute("errorMessage", errorMessage);
-
-        return "login/login";
-
-    }
-
-
-    @GetMapping("/joinPage")
-    public String joinPage(Model model) {
-
-        return "login/join";
-    }
-
-    @GetMapping("/close")
-    public String close() {
-        return "close";
-    }
 
     /*
      * 로그인한 경우만
      */
 
-    @GetMapping("user/index")
-    public String user(Authentication authentication, Model model) {
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        model.addAttribute("username", userDetails.getUsername());
-
-        return "member/index";
-    }
-
-    @GetMapping("user/mypage")
+    @GetMapping("/mypage")
     public String mypage(Authentication authentication, Model model) {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -82,14 +38,14 @@ public class ViewController {
         return "member/mypage";
     }
 
-    @GetMapping("/graph")
-    public String graph() {
+    @GetMapping("/graphs")
+    public String graph(Model model) {
         // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         // model.addAttribute("username", userDetails.getUsername());
         return "member/graphs";
     }
 
-    @GetMapping("user/view/all")
+    @GetMapping("/index")
     public String viewPost(Model model, Authentication authentication) throws Exception {
         log.info("[PostController][viewPost] start");
         if (authentication == null) {
@@ -132,5 +88,51 @@ public class ViewController {
         }
         return "member/index";
     }
+
+    // // 게시글 가져오기
+    // public @ResponseBody ResponseEntity<List<PostDto>> getAllPost() throws
+    // Exception {
+    // return ResponseEntity.ok(postService.viewAllPost());
+
+    // }
+
+    // @GetMapping("view/all")
+    // public String viewPost(Model model, Authentication authentication) throws
+    // Exception {
+    // log.info("[PostController][viewPost] start");
+    // if (authentication == null) {
+    // return "redirect:/index";
+    // }
+
+    // @SuppressWarnings("unchecked")
+    // List<PostDto> postDtos = (List<PostDto>) getAllPost();
+
+    // if (!postDtos.isEmpty()) {
+    // log.info("[PostController][viewPost] postDtos : " + postDtos);
+    // model.addAttribute("postDtos", postDtos);
+
+    // }
+
+    // model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
+
+    // if (authentication != null) {
+    // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    // String username = userDetails.getUsername();
+
+    // model.addAttribute("email", username);
+    // try {
+    // model.addAttribute("user_nickname",
+    // userService.findByEmail(username).getNickname());
+    // log.info("[PostController][viewPost] nickname : " +
+    // userService.findByEmail(username).getNickname());
+
+    // } catch (Exception e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+
+    // }
+    // return "member/index";
+    // }
 
 }

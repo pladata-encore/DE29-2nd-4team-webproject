@@ -146,7 +146,7 @@
                 };
 
                 function fetchTodayEmotions() {
-                    $.get("/api/v1/emotion/today", function (data) {
+                    $.get("/api/v1/user/emotion/today", function (data) {
                         var defaultEmotion = Emotions["1"];
 
                         // reduce() 함수를 사용하여 배열의 요소를 순회하면서 최댓값을 찾음 
@@ -212,7 +212,7 @@
                     popup.style.display = "none";
                     overlay.style.display = "none";
                     currentPopup = null;
-                    window.location.href = "http://localhost:8080/user/view/all?login_success=true";
+                    window.location.href = "http://localhost:8080/user/index?login_success=true";
                 }
 
             </script>
