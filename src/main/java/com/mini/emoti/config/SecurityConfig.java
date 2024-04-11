@@ -51,7 +51,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize // http request 요청에 대한 화면 접근(url path) 권한 설정
                         .requestMatchers("/user/**") // "/user" 와 같은 url path로 접근할 경우
                         .authenticated() // 인증(로그인)만 접근 가능
-                        .anyRequest().permitAll())
+                        .requestMatchers("/manager/**")
+                        // ADMIN, MANAGER이라는 권한을 갖은 사용자만 접근 가능 
+                        .hasAnyAuthority("MANAGER", "ADMIN")
+                         // "/admin" 와 같은 url path로 접근할 경우...
+                        .requestMatchers("/admin/**")
+                        // ADMIN이라는 권한을 갖은 사용자만 접근 가능 
+                        .hasAnyAuthority("ADMIN")
+                        .anyRequest().permitAll()) // 그외의 모든 url path는 누구나 접근 가능 
 
                 // 인증(로그인)에 대한 설정
                 .formLogin(formLogin -> formLogin
@@ -72,11 +79,10 @@ public class SecurityConfig {
                         .logoutSuccessHandler(logoutAuthSuccesshandler) // 로그아웃 성공시
                         .permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
+                // 인증되지 않은 사용자가 접근했을 때 "/index"로 리디렉션합니다.
                         .authenticationEntryPoint(
-                                (request, response, authException) -> response.sendRedirect("/index"))); // 인증되지 않은 사용자가
-                                                                                                         // 접근했을 때
-                                                                                                         // "/index"로
-                                                                                                         // 리디렉션합니다.
+                                (request, response, authException) -> response.sendRedirect("/index"))); 
+                                                                                                        
 
         http.headers().frameOptions().disable(); // X-Frame-Options 헤더 비활성화
 

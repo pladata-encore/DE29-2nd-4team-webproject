@@ -14,6 +14,8 @@ import com.mini.emoti.model.dto.PostDto;
 import com.mini.emoti.service.PostService;
 import com.mini.emoti.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -30,7 +32,7 @@ public class UserController {
      * 로그인한 경우만
      */
 
-    @GetMapping("/mypage")
+    @GetMapping("mypage")
     public String mypage(Authentication authentication, Model model) {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -38,7 +40,7 @@ public class UserController {
         return "member/mypage";
     }
 
-    @GetMapping("/graphs")
+    @GetMapping("graphs")
     public String graph(Model model) {
         // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         // model.addAttribute("username", userDetails.getUsername());
@@ -77,8 +79,10 @@ public class UserController {
 
             model.addAttribute("email", username);
             try {
-                model.addAttribute("user_nickname", userService.findByEmail(username).getNickname());
-                log.info("[PostController][viewPost] nickname : " + userService.findByEmail(username).getNickname());
+                model.addAttribute("user_nickname",
+                        userService.findByEmail(username).getNickname());
+                log.info("[PostController][viewPost] nickname : " +
+                        userService.findByEmail(username).getNickname());
 
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -89,6 +93,18 @@ public class UserController {
         return "member/index";
     }
 
+    // 로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        log.info("[UserController][logout] Start");
+
+        HttpSession session = request.getSession();
+        session.removeAttribute("userId");
+        session.removeAttribute("userRole");
+
+        return "redirect:/loginPage";
+    }
+
     // // 게시글 가져오기
     // public @ResponseBody ResponseEntity<List<PostDto>> getAllPost() throws
     // Exception {
@@ -96,7 +112,7 @@ public class UserController {
 
     // }
 
-    // @GetMapping("view/all")
+    // @GetMapping("index")
     // public String viewPost(Model model, Authentication authentication) throws
     // Exception {
     // log.info("[PostController][viewPost] start");
@@ -104,8 +120,8 @@ public class UserController {
     // return "redirect:/index";
     // }
 
-    // @SuppressWarnings("unchecked")
-    // List<PostDto> postDtos = (List<PostDto>) getAllPost();
+    // ResponseEntity<List<PostDto>> responseEntity = getAllPost();
+    // List<PostDto> postDtos = responseEntity.getBody();
 
     // if (!postDtos.isEmpty()) {
     // log.info("[PostController][viewPost] postDtos : " + postDtos);

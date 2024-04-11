@@ -68,6 +68,9 @@ public class UserEntity extends BaseEntity {
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean isLogin;
 
+    // 일반사용자 / 관리자를 구분용
+    private String role; 
+
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<PostEntity> posts;
 

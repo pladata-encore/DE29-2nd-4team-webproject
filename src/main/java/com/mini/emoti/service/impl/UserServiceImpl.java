@@ -27,15 +27,10 @@ public class UserServiceImpl implements UserService {
     public void updateIsLoginByEmail(String email, Boolean isLogin) throws ServletException {
         // TODO Auto-generated method stub
         UserEntity entity;
-        try {
-            entity = userDao.findByEmail(email);
-            log.info("[UserServiceImpl][updateIsLoginByEmail] " + email + " / " + entity);
-            entity.setIsLogin(isLogin);
-            userDao.updateIsLoginByEmail(entity);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        entity = userDao.findByEmail(email);
+        log.info("[UserServiceImpl][updateIsLoginByEmail] " + email + " / " + entity);
+        entity.setIsLogin(isLogin);
+        userDao.updateIsLoginByEmail(entity);
 
     }
 
@@ -59,6 +54,7 @@ public class UserServiceImpl implements UserService {
         dto.setPostCnt(entity.getPostCnt());
         dto.setProfileImage(entity.getProfileImage());
         dto.setPassword(entity.getPassword());
+        dto.setRole(entity.getRole());
 
         return dto;
     }
@@ -75,6 +71,12 @@ public class UserServiceImpl implements UserService {
         entity.setNickname(dto.getNickname());
         entity.setPostCnt(dto.getPostCnt());
         entity.setProfileImage(dto.getProfileImage());
+        entity.setRole("USER");
+        if(dto.getNickname().equals("admin")) {
+            dto.setRole("ADMIN");
+        } else if(dto.getNickname().equals("manager")) {
+            dto.setRole("MANAGER");
+        }
 
         // 비밀번호 암호화 적용
         String rawPwd = entity.getPassword();
@@ -101,6 +103,7 @@ public class UserServiceImpl implements UserService {
         entity.setNickname(dto.getNickname());
         entity.setPostCnt(dto.getPostCnt());
         entity.setProfileImage(dto.getProfileImage());
+        entity.setRole(dto.getRole());
         userDao.updateUser(entity);
 
     }
@@ -117,6 +120,8 @@ public class UserServiceImpl implements UserService {
         dto.setPostCnt(entity.getPostCnt());
         dto.setProfileImage(entity.getProfileImage());
         dto.setPassword(entity.getPassword());
+        dto.setRole(entity.getRole());
+
 
         return dto;
 
