@@ -21,6 +21,8 @@ import com.mini.emoti.service.EmotionService;
 import com.mini.emoti.service.PostService;
 import com.mini.emoti.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,6 +78,7 @@ public class UserApiController {
 
         return ResponseEntity.ok("업데이트 성공");
     }
+
 
     /*
      * POST REST API

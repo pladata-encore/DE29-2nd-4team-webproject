@@ -85,7 +85,7 @@ public class UserController {
                         userService.findByEmail(username).getNickname());
 
             } catch (Exception e) {
-                // TODO Auto-generated catch block
+                // TODO Auto-generatzed catch block
                 e.printStackTrace();
             }
 
@@ -101,8 +101,46 @@ public class UserController {
         HttpSession session = request.getSession();
         session.removeAttribute("userId");
         session.removeAttribute("userRole");
+        return "redirect:/index";
+    }
 
-        return "redirect:/loginPage";
+
+    // 인증 
+    @GetMapping("/aouthPage")
+    public String user(HttpServletRequest request, Model model) {
+        log.info("[UserController][user] Start");
+
+        HttpSession session = request.getSession();
+
+        // 인증 확인!! -> 로그인 유무 확인 
+        if(session.getAttribute("userId") == null) {
+            return "redirect:/loginPage";
+        }
+
+        model.addAttribute("userId", session.getAttribute("userId"));
+        model.addAttribute("userRole", session.getAttribute("userRole"));
+        return "user";
+    }
+
+    // 인가 
+    @GetMapping("/adminPage")
+    public String admin(HttpServletRequest request, Model model) {
+        log.info("[UserController][admin] Start");
+
+        HttpSession session = request.getSession();
+
+        // 인증 확인!! -> 로그인 유무 확인 
+        if(session.getAttribute("userId") == null) {
+            return "redirect:/loginPage";
+        } 
+        // 인가 확인!! -> 관리자 유무 확인 
+        else if(!session.getAttribute("userRole").equals("admin")) {
+            return "redirect:/aouthPage";
+        }
+
+        model.addAttribute("userId", session.getAttribute("userId"));
+        model.addAttribute("userRole", session.getAttribute("userRole"));
+        return "admin";
     }
 
     // // 게시글 가져오기

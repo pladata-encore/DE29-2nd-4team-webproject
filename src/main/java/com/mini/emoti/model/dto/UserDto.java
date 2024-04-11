@@ -41,4 +41,7 @@ public class UserDto {
     @PositiveOrZero
     private int postCnt;
 
+    // 일반사용자 / 관리자를 구분용
+    private String role; 
+
 }

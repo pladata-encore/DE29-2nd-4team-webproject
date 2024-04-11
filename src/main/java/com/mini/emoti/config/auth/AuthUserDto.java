@@ -26,8 +26,7 @@ public class AuthUserDto implements UserDetails {
 
             @Override
             public String getAuthority() {
-                return ""; // 관리자 권한 구분 안함
-            }
+                return userDto.getRole();            }
         });
 
         return authorities;
