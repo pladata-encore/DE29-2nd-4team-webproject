@@ -24,10 +24,12 @@ import com.mini.emoti.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
 public class UserApiController {
 
@@ -40,19 +42,31 @@ public class UserApiController {
     @Autowired
     private EmotionService emotionService;
 
-    /*
+    /* 
      * 유저만 접근 가능
-     * 
+     */
+
+
+     
+    /*  
      * USER REST API
      */
 
     // 유저 조회
     // localhost:8080/api/v1/user/{userName}
-    @GetMapping("/find/name/{userName}")
-    public UserDto findByUserName(@PathVariable("userName") String userName) throws Exception {
-        return userService.findByUserName(userName);
-        // return ResponseEntity.ok(userService.findByUserName(userName).toString());
+
+    //  User 객체를 그대로 반환 -> 클라이언트가 예상하는 HttpStatus를 설정해줄 수 없다
+    // @GetMapping("/find/name/{userName}")
+    // public UserDto findByUserName(@PathVariable("userName") String userName) throws Exception {
+    //     return userService.findByUserName(userName);
+    // }
+    
+    // 객체를 그대로 반환하면 HttpStatus를 설정해줄 수 없으므로 객체를 상황에 맞는 ResponseEntity로 감싸서 반환
+    @GetMapping( "/find/name/{userName}")
+    public ResponseEntity<UserDto> findByUserNamerWithResponseEntity(@PathVariable("userName") String userName) throws Exception {
+        return ResponseEntity.ok(userService.findByUserName(userName));
     }
+
 
     @GetMapping("/find/user/email/{email}")
     public UserDto findByEmail(@PathVariable("email") String email) throws Exception {

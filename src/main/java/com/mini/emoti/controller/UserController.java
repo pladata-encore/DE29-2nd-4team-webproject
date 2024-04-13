@@ -3,14 +3,18 @@ package com.mini.emoti.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mini.emoti.model.dto.PostDto;
+import com.mini.emoti.model.dto.UserDto;
 import com.mini.emoti.service.PostService;
 import com.mini.emoti.service.UserService;
 
@@ -32,6 +36,13 @@ public class UserController {
      * 로그인한 경우만
      */
 
+     // UserDto를 json으로 반환하기 위해 @ResponseBody라는 어노테이션 추가 
+    //  @GetMapping( "/find/name/{userName}")
+    //  public @ResponseBody ResponseEntity<UserDto> findByUserNamerWithResponseEntity(@PathVariable("userName") String userName) throws Exception {
+    //      return ResponseEntity.ok(userService.findByUserName(userName));
+    //  }
+
+     
     @GetMapping("mypage")
     public String mypage(Authentication authentication, Model model) {
 
@@ -47,7 +58,7 @@ public class UserController {
         return "member/graphs";
     }
 
-    @GetMapping("/index")
+    @GetMapping("index")
     public String viewPost(Model model, Authentication authentication) throws Exception {
         log.info("[PostController][viewPost] start");
         if (authentication == null) {
@@ -94,7 +105,7 @@ public class UserController {
     }
 
     // 로그아웃
-    @GetMapping("/logout")
+    @GetMapping("logout")
     public String logout(HttpServletRequest request) {
         log.info("[UserController][logout] Start");
 
@@ -106,7 +117,7 @@ public class UserController {
 
 
     // 인증 
-    @GetMapping("/aouthPage")
+    @GetMapping("aouthPage")
     public String user(HttpServletRequest request, Model model) {
         log.info("[UserController][user] Start");
 
@@ -123,7 +134,7 @@ public class UserController {
     }
 
     // 인가 
-    @GetMapping("/adminPage")
+    @GetMapping("adminPage")
     public String admin(HttpServletRequest request, Model model) {
         log.info("[UserController][admin] Start");
 
