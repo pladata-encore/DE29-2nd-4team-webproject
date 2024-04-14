@@ -47,24 +47,22 @@ public class UserApiController {
     // 유저 조회
     // localhost:8080/api/v1/user/{userName}
     @GetMapping("/find/name/{userName}")
-    public UserDto findByUserName(@PathVariable("userName") String userName) throws Exception {
-        return userService.findByUserName(userName);
-        // return ResponseEntity.ok(userService.findByUserName(userName).toString());
+    public ResponseEntity<UserDto> findByUserName(@PathVariable("userName") String userName) throws Exception {
+        return ResponseEntity.ok(userService.findByUserName(userName));
     }
+       
 
     @GetMapping("/find/user/email/{email}")
-    public UserDto findByEmail(@PathVariable("email") String email) throws Exception {
-        return userService.findByEmail(email);
-        // return ResponseEntity.ok(userService.findByUserName(userName).toString());
+    public ResponseEntity<UserDto> findByEmail(@PathVariable("email") String email) throws Exception {
+        return ResponseEntity.ok(userService.findByEmail(email));
     }
 
     // 삭제
     // localhost:8080/api/v1/user/{userName}
     @DeleteMapping("/{userName}")
     public ResponseEntity<String> deleteUser(@PathVariable("userName") String userName) throws Exception {
-
         userService.deleteUser(userName);
-        return ResponseEntity.ok("삭제 성공");
+        return ResponseEntity.ok(userName + "삭제에 성공했습니다.");
     }
 
     // 프로필 수정
@@ -74,7 +72,7 @@ public class UserApiController {
 
         userService.updateUser(dto);
 
-        return ResponseEntity.ok("업데이트 성공");
+        return ResponseEntity.ok("유저" + dto.getNickname() + " 프로필 업데이트 성공");
     }
 
     /*
@@ -83,11 +81,9 @@ public class UserApiController {
 
     // 게시글 작성
     @PostMapping("/post/write")
-    public List<Map<String, Object>> writePost(@Valid @ModelAttribute PostDto dto) throws Exception {
-
-        List<Map<String, Object>> responseData;
-        responseData = postService.writePost(dto);
-        return responseData;
+    public ResponseEntity<List<Map<String, Object>>> writePost(@Valid @ModelAttribute PostDto dto) throws Exception {
+        List<Map<String, Object>>  responseData = postService.writePost(dto);
+        return ResponseEntity.ok(responseData);
 
     }
 
@@ -97,7 +93,7 @@ public class UserApiController {
         log.info("[deletePost1] : " + postDto.getPostId());
 
         postService.deletePost(postDto.getPostId());
-        return ResponseEntity.ok().body("{\"message\": \"삭제 성공\"}");
+        return ResponseEntity.ok().body("{\"message\": \"게시글 삭제 성공\"}");
     }
 
     // 게시글 수정
@@ -107,106 +103,101 @@ public class UserApiController {
 
         postService.updatePost(dto, postId);
 
-        return ResponseEntity.ok().body("{\"message\": \"수정 성공\"}");
+        return ResponseEntity.ok().body("{\"message\": \"게시글 수정 성공\"}");
     }
 
     // 게시글 조회
     @GetMapping("/post/view/{postid}")
-    public PostDto findById(@PathVariable("postId") Long postId) throws Exception {
-        PostDto dto;
-
-        dto = postService.findById(postId);
-        return dto;
+    public ResponseEntity<PostDto> findById(@PathVariable("postId") Long postId) throws Exception {
+        PostDto dto = postService.findById(postId);
+        return ResponseEntity.ok(dto);
     }
 
     /*
-     * POST REST API
+     * EMOTION REST API
      */
 
     // localhost:8080/api/v1/emotion/insert
     @PostMapping("/emotion/insert")
-    public String isertEmotion(@RequestBody EmotionDto dto) throws Exception {
+    public ResponseEntity<String> isertEmotion(@RequestBody EmotionDto dto) throws Exception {
         emotionService.isertEmotion(dto);
-        return "저장 성공";
+        return ResponseEntity.ok("오늘의 감정" + dto.getEmotionType() + "가 추가 됐습니다.");
     }
 
     // 감정 조회
     // localhost:8080/api/v1/emotion/find/{emotionId}
     @GetMapping("/emotion/find/{emotionId}")
-    public EmotionDto findByEmotionId(@PathVariable("emotionId") Long emotionId) throws Exception {
-        EmotionDto dto;
+    public ResponseEntity<EmotionDto> findByEmotionId(@PathVariable("emotionId") Long emotionId) throws Exception {
+        EmotionDto dto = emotionService.findByEmotionId(emotionId);
+        return ResponseEntity.ok(dto);
 
-        dto = emotionService.findByEmotionId(emotionId);
-        return dto;
-
-        // return dto.toString();
     }
 
     // 감정 삭제
     // localhost:8080/api/v1/emotion/delete/{emotionId}
     @DeleteMapping("/emotion/delete/{emotionId}")
-    public String deleteEmotion(@PathVariable("emotionId") Long emotionId) throws Exception {
+    public ResponseEntity<String> deleteEmotion(@PathVariable("emotionId") Long emotionId) throws Exception {
         emotionService.deleteEmotion(emotionId);
-        return "삭제 성공";
+        return ResponseEntity.ok(emotionId +" : 삭제 성공");
     }
 
     // localhost:8080/api/v1/emotion/update
     @PostMapping("/emotion/update")
-    public String updateEmotion(@RequestBody EmotionDto dto) throws Exception {
+    public ResponseEntity<String> updateEmotion(@RequestBody EmotionDto dto) throws Exception {
 
         emotionService.updateEmotion(dto);
-        return "수정 성공";
+        return ResponseEntity.ok(dto.getEmotionId() + "수정 성공");
     }
 
     // 모든 감정 데이터 조회
     @GetMapping("/emotion/all")
-    public List<EmotionDto> findAllEmotion() throws Exception {
+    public ResponseEntity<List<EmotionDto>> findAllEmotion() throws Exception {
 
-        return emotionService.findAllEmotion();
+        return ResponseEntity.ok(emotionService.findAllEmotion());
 
     }
 
     // 유저별 감정 데이터 조회
     @GetMapping("/emotion/{email}")
-    public List<EmotionDto> findByEmailEmotion(@PathVariable("email") String email) throws Exception {
+    public ResponseEntity<List<EmotionDto>> findByEmailEmotion(@PathVariable("email") String email) throws Exception {
 
-        return emotionService.findByEmailEmotion(email);
+        return ResponseEntity.ok(emotionService.findByEmailEmotion(email));
     }
 
     // 오늘 우리의 기분
     @GetMapping("/emotion/today")
-    public List<Object[]> getTodayEmotions() throws Exception {
+    public ResponseEntity<List<Object[]>> getTodayEmotions() throws Exception {
 
         // log.info("emotionService : " + emotionService.getTodayEmotions());
-        return emotionService.getTodayEmotions();
+        return ResponseEntity.ok(emotionService.getTodayEmotions());
     }
 
     // 주간 우리의 기분 (7일)
     @GetMapping("/emotion/last/weekly")
-    public List<Object[]> getLastWeeklyEmotions() throws Exception {
+    public ResponseEntity<List<Object[]>> getLastWeeklyEmotions() throws Exception {
 
-        return emotionService.getLastWeeklyEmotions();
+        return ResponseEntity.ok(emotionService.getLastWeeklyEmotions());
     }
 
     // 주별 우리의 기분 (7일)
     @GetMapping("/emotion/weekly")
-    public List<Object[]> getWeeklyEmotions() throws Exception {
+    public ResponseEntity<List<Object[]>> getWeeklyEmotions() throws Exception {
 
-        return emotionService.getWeeklyEmotions();
+        return ResponseEntity.ok(emotionService.getWeeklyEmotions());
     }
 
     // 그룹별 가장 많은 감정데이터 - 전체
     @GetMapping("/emotion/most/group")
-    public List<Object[]> getMostEmotionType() throws Exception {
+    public ResponseEntity<List<Object[]>> getMostEmotionType() throws Exception {
 
-        return emotionService.getMostEmotionType();
+        return ResponseEntity.ok(emotionService.getMostEmotionType());
     }
 
     // 개인별 가장 많은 감정데이터 - 개인
     @GetMapping("/emotion/most/member/{email}")
-    public List<Object[]> getMostEmotionTypeByUser(@PathVariable("email") String email) throws Exception {
+    public ResponseEntity<List<Object[]>> getMostEmotionTypeByUser(@PathVariable("email") String email) throws Exception {
 
-        return emotionService.getMostEmotionTypeByUser(email);
+        return ResponseEntity.ok(emotionService.getMostEmotionTypeByUser(email));
 
     }
 
