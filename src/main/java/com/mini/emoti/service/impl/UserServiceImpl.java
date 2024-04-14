@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         // 권한 설정
         entity.setRole(Role.USER.name());
         if(dto.getNickname().equals("admin")) {
-            dto.setRole(Role.ADMIN.name());
+            entity.setRole(Role.ADMIN.name());
         }
 
         // 비밀번호 암호화 적용
