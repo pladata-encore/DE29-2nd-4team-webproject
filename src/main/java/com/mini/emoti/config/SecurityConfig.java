@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.mini.emoti.config.constant.Role;
 import com.mini.emoti.config.handler.LoginAuthFailureHandler;
 import com.mini.emoti.config.handler.LoginAuthSuccessHandelr;
 import com.mini.emoti.config.handler.LogoutAuthSuccessHandler;
@@ -48,20 +49,21 @@ public class SecurityConfig {
         http.csrf((csrfConfig) -> csrfConfig.disable()
         )
         .headers((headerConfig) ->
-        headerConfig.frameOptions(frameOptionsConfig ->
+        headerConfig.frameOptions(frameOptionsConfig -> // X-Frame-Options 헤더 비활성화
                 frameOptionsConfig.disable()
         ))
         // 인증 & 인가 설정
         .authorizeHttpRequests(authorize -> authorize // http request 요청에 대한 화면 접근(url path) 권한 설정
-                        .requestMatchers("/user/**") // "/user" 와 같은 url path로 접근할 경우
+                        // "/user" 와 같은 url path로 접근할 경우
+                        .requestMatchers("/user/**") 
                         .authenticated() // 인증(로그인)만 접근 가능
-                        .requestMatchers("/manager/**")
+                        // .requestMatchers("/manager/**")
                         // ADMIN, MANAGER이라는 권한을 갖은 사용자만 접근 가능 
-                        .hasAnyAuthority("MANAGER", "ADMIN")
+                        // .hasAnyAuthority("MANAGER", "ADMIN")
                          // "/admin" 와 같은 url path로 접근할 경우...
-                        .requestMatchers("/admin/**")
+                        .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                         // ADMIN이라는 권한을 갖은 사용자만 접근 가능 
-                        .hasAnyAuthority("ADMIN")
+                        // .hasAnyAuthority("ADMIN")
                         .anyRequest().permitAll()) // 그외의 모든 url path는 누구나 접근 가능 
 
                 // 인증(로그인)에 대한 설정

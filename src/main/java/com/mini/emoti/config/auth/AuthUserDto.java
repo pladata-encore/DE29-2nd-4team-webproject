@@ -23,7 +23,6 @@ public class AuthUserDto implements UserDetails {
         // TODO Auto-generated method stub
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new GrantedAuthority() {
-
             @Override
             public String getAuthority() {
                 return userDto.getRole();            }

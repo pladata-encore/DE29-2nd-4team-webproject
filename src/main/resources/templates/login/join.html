@@ -50,6 +50,9 @@
                     placeholder="비밀번호 확인" required oninput="validatePasswordCheck(this)">
                 <div class="error-message" id="passwordCheckErrorMessage">비밀번호가 일치하지 않습니다.</div>
             </div>
+
+            <input class="roleInput" id="roleInput" type="hidden" name="role" value="일반사용자">
+
             <input class="signUpSubmit" type="submit" value="회원가입" id="signUpButton" disabled>
         </form>
         <script>
@@ -126,6 +129,20 @@
                 passwordCheckErrorMessage.style.display = "none";
             }
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+        var nicknameInput = document.querySelector('.signUpNickname'); 
+        var roleInput = document.getElementById('roleInput');
+
+        nicknameInput.addEventListener('input', function() {
+            if (nicknameInput.value == 'admin') {
+                roleInput.value = '관리자';
+            } else {
+                roleInput.value = '일반사용자';
+            }
+        });
+    });
+        
     </script>
     </div>
 </body>

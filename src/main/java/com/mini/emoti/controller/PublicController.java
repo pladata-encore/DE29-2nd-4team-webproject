@@ -61,8 +61,7 @@ public class PublicController {
 
             redirectAttributes.addAttribute("error", true);
             log.info("[PublicController][joinPage] error : " + e.getMessage());
-
-            // 에러 처리
+            
             return "redirect:/joinPage";
         }
     }

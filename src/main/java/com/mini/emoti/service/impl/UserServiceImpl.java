@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.mini.emoti.config.constant.Role;
 import com.mini.emoti.model.dao.UserDao;
 import com.mini.emoti.model.dto.UserDto;
 import com.mini.emoti.model.entity.UserEntity;
@@ -71,11 +72,10 @@ public class UserServiceImpl implements UserService {
         entity.setNickname(dto.getNickname());
         entity.setPostCnt(dto.getPostCnt());
         entity.setProfileImage(dto.getProfileImage());
-        entity.setRole("USER");
+        // 권한 설정
+        entity.setRole(Role.USER.name());
         if(dto.getNickname().equals("admin")) {
-            dto.setRole("ADMIN");
-        } else if(dto.getNickname().equals("manager")) {
-            dto.setRole("MANAGER");
+            dto.setRole(Role.ADMIN.name());
         }
 
         // 비밀번호 암호화 적용

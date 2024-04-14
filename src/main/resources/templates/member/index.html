@@ -454,8 +454,8 @@
                 console.log("current user : " + nickname);
                 console.log('postId:', postId);
 
-                if (commentNickname == nickname) {
-                    console.log("동일 유저");
+                if (commentNickname == nickname | commentNickname == '관리자') {
+                    console.log("nickname : "+nickname);
 
                     // 사용자의 닉네임과 댓글의 닉네임이 동일한 경우 수정 및 삭제 버튼을 표시함
                     const buttons = comment.querySelector('.comment-buttons');

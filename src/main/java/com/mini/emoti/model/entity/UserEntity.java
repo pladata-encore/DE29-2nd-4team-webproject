@@ -46,7 +46,7 @@ public class UserEntity extends BaseEntity {
     // pw
     // @Size(min = 6, max = 10, message = "비밀번호는 최소 6자에서 최대 10자여야 합니다.")
     @NotBlank(message = "비밀번호는 필수입니다.")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]*$", message = "비밀번호는 적어도 하나의 영문자와 하나의 숫자를 포함해야 합니다.")
+    // @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]*$", message = "비밀번호는 적어도 하나의 영문자와 하나의 숫자를 포함해야 합니다.")
     private String password; // PW
 
     // 감정 개수
