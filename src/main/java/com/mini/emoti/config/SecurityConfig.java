@@ -44,11 +44,15 @@ public class SecurityConfig {
     public SecurityFilterChain finteFilterChain(HttpSecurity http) throws Exception {
         // CSRF란, Cross Site Request Forgery의 약자로,
         // 한글 뜻으로는 사이트간 요청 위조를 뜻합니다.
-        http.csrf(AbstractHttpConfigurer::disable);
-
+        // http.csrf(AbstractHttpConfigurer::disable);
+        http.csrf((csrfConfig) -> csrfConfig.disable()
+        )
+        .headers((headerConfig) ->
+        headerConfig.frameOptions(frameOptionsConfig ->
+                frameOptionsConfig.disable()
+        ))
         // 인증 & 인가 설정
-        http
-                .authorizeHttpRequests(authorize -> authorize // http request 요청에 대한 화면 접근(url path) 권한 설정
+        .authorizeHttpRequests(authorize -> authorize // http request 요청에 대한 화면 접근(url path) 권한 설정
                         .requestMatchers("/user/**") // "/user" 와 같은 url path로 접근할 경우
                         .authenticated() // 인증(로그인)만 접근 가능
                         .requestMatchers("/manager/**")
@@ -84,7 +88,7 @@ public class SecurityConfig {
                                 (request, response, authException) -> response.sendRedirect("/index"))); 
                                                                                                         
 
-        http.headers().frameOptions().disable(); // X-Frame-Options 헤더 비활성화
+        // http.headers().frameOptions().disable(); // X-Frame-Options 헤더 비활성화
 
         // 위에서 설정한 인증 & 인가를 Spring Boot Configuration에 적용
         return http.build();
