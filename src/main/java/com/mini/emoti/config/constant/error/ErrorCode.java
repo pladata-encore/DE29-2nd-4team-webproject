@@ -1,4 +1,4 @@
-package com.mini.emoti.config.constant;
+package com.mini.emoti.config.constant.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
