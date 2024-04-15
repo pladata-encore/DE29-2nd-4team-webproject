@@ -39,8 +39,8 @@ public class UserEntity extends BaseEntity {
 
     // nickname
     @NotBlank
-    @Pattern(regexp = "^[가-힣a-z0-9_]+$", message = "닉네임은 한글, 영어 소문자, 숫자, 밑줄(_)만 포함할 수 있습니다.")
-    @Column(unique = true, length = 10)
+    @Pattern(regexp = "^[가-힣a-z0-9_]+$", message = "닉네임은 한글, 영어 소문자, 숫자, 밑줄(_)만 포함할 수 있습니다. (12 글자 제한)")
+    @Column(unique = true, length = 12)
     private String nickname;
 
     // pw

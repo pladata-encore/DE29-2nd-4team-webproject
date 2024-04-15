@@ -27,12 +27,7 @@ public class LogoutAuthSuccessHandler implements LogoutSuccessHandler {
             throws IOException, ServletException {
         // TODO Auto-generated method stub
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        try {
-            userService.updateIsLoginByEmail(userDetails.getUsername(), false);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        userService.updateIsLoginByEmail(userDetails.getUsername(), false);
 
         // 로그아웃 -> index로 이동
         response.sendRedirect("/index");
