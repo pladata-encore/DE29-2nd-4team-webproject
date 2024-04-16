@@ -36,7 +36,7 @@
 
             </div>
             <div class="input-wrapper">
-                <input class="signUpEmail" id="emailInput" type="email" name="email" placeholder="이메일" required
+                <input class="signUpEmail" id="emailInput" name="email" placeholder="이메일" required
                     oninput="validateEmail(this)">
                 <div class="error-message" id="emailErrorMessage">이메일 형식이 아닙니다.</div>
             </div>
@@ -73,21 +73,21 @@
         }
 
         function validateEmail(input) {
-            var email = input.value;
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            var errorMessage = document.getElementById("emailErrorMessage");
-            var signUpButton = document.getElementById("signUpButton");
+            // var email = input.value;
+            // var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // var errorMessage = document.getElementById("emailErrorMessage");
+            // var signUpButton = document.getElementById("signUpButton");
 
-            if (email.trim() === "") {
-                errorMessage.style.display = "none";
-                signUpButton.disabled = true;
-            } else if (!emailPattern.test(email)) {
-                errorMessage.style.display = "block";
-                signUpButton.disabled = true;
-            } else {
-                errorMessage.style.display = "none";
-                signUpButton.disabled = false;
-            }
+            // if (email.trim() === "") {
+            //     errForMessage.style.display = "none";
+            //     signUpButton.disabled = true;
+            // } else if (!emailPattern.test(email)) {
+            //     errorMessage.style.display = "block";
+            //     signUpButton.disabled = true;
+            // } else {
+            //     errorMessage.style.display = "none";
+            //     signUpButton.disabled = false;
+            // }
         }
 
         function validatePassword(input) {

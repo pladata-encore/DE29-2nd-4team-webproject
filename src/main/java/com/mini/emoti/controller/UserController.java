@@ -64,12 +64,9 @@ public class UserController {
         } else {
             List<PostDto> postDtos = postService.viewAllPost();
 
-            if (!postDtos.isEmpty()) {
-                log.info("[PostController][viewPost] postDtos : " + postDtos);
-                model.addAttribute("postDtos", postDtos != null ? postDtos : null);
-                model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
+            model.addAttribute("postDtos", postDtos != null ? postDtos : null);
+            model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
 
-            }
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
 

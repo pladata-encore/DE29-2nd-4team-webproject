@@ -70,19 +70,21 @@ public class PublicController {
     // }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute @Valid UserDto dto, BindingResult bindingResult,
+    public String join(@ModelAttribute @Valid UserDto dto,
             RedirectAttributes redirectAttributes) throws Exception {
         log.info("[PublicController][join] Start");
+        // if (bindingResult.hasErrors()) {
+        //     // 유효성 검사 오류가 있는 경우
+        //     log.info("[PublicController][join] 유효성 검사 오류: {}" + bindingResult.getAllErrors());
+        //     redirectAttributes.addAttribute("error", true);
+        //     throw new MethodArgumentNotValidException(null, bindingResult);
+        //     // return "redirect:/joinPage";
+        // }
 
-        if (bindingResult.hasErrors()) {
-            // 유효성 검사 오류가 있는 경우
-            log.info("[PublicController][join] 유효성 검사 오류: {}" + bindingResult.getAllErrors());
-            redirectAttributes.addAttribute("error", true);
-            throw new MethodArgumentNotValidException(null, bindingResult);
-            // return "redirect:/joinPage";
-        }
-
+        log.info("[PublicController][join] Start dto : "+dto);
+        
         userService.joinUser(dto);
+
         // 회원가입이 성공했을 때 인덱스 페이지로 리다이렉션하고 성공 파라미터를 함께 전달
         redirectAttributes.addAttribute("success", true);
         return "redirect:/loginPage";

@@ -39,6 +39,8 @@ public class ControllerExceptionHandler {
      *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
      * @return
      */
+
+     // cotroller에 던지고 다시 받아서 모달로 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
