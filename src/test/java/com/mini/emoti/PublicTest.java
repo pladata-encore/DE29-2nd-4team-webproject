@@ -37,7 +37,6 @@ import com.mini.emoti.service.UserService;
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class) })
 @MockBean(JpaMetamodelMappingContext.class)
 public class PublicTest {
-
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -50,18 +49,6 @@ public class PublicTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
-    // @BeforeEach
-    // void setUp(WebApplicationContext webApplicationContext) {
-    // this.mockMvc = MockMvcBuilders
-    // .webAppContextSetup(webApplicationContext)
-    // .apply(springSecurity())
-    // .defaultRequest(post("/**").with(csrf()))
-    // .defaultRequest(put("/**").with(csrf()))
-    // .defaultRequest(delete("/**").with(csrf()))
-    // .defaultRequest(get("/**").with(csrf()))
-    // .build();
-    // }
-
     @BeforeEach
     public void setup() {
         // Init MockMvc Object and build
@@ -74,16 +61,34 @@ public class PublicTest {
     public void joinUserValidationFailed() throws Exception {
         UserDto userDto = new UserDto();
         userDto.setNickname("testuser");
-        userDto.setEmail("testemail@com"); // 잘못된 이메일 형식
+        userDto.setPassword("test123"); 
+        userDto.setEmail("testemail@gmail"); // 잘못된 이메일 형식
         String jsonRequest = objectMapper.writeValueAsString(userDto);
-        // log.info("[PublicTest][joinUserValidationFailed] jsonRequest : "+
-        // jsonRequest);
 
         mockMvc.perform(post("/join")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
                 .content(jsonRequest)) // userDto를 직접 content()에 전달
                 .andExpect(status().is4xxClientError())
+                .andDo(print());
+    }
+
+
+    @Test
+    @DisplayName("회원가입 테스트 - 성공")
+    public void joinUserValidationSuccess() throws Exception {
+        UserDto userDto = new UserDto();
+        userDto.setNickname("testuser");
+        userDto.setPassword("test123"); 
+        userDto.setEmail("test@gmail.com"); 
+        String jsonRequest = objectMapper.writeValueAsString(userDto);
+
+        mockMvc.perform(post("/join")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest)
+                .characterEncoding("utf-8")
+                ) // userDto를 직접 content()에 전달
+                .andExpect(status().isOk())
                 .andDo(print());
     }
 
