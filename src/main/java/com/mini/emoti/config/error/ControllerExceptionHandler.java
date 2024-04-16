@@ -21,28 +21,47 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-// @RestControllerAdvice 어노테이션을 사용해 전역에서 발생하는 예외를 처리하는 예외 핸들러 컨트롤러
-//  애플리케이션 전반에 걸쳐 발생할 수 있는 예외들을 효과적으로 관리하고, 에러 발생 시 일관된 응답 구조를 제공
+// https://velog.io/@leehyeonmin34/exception-handling
+// https://cheese10yun.github.io/spring-jpa-best-02/
+
+/*스프링의 @ControllerAdvice라는 걸 쓰면 모든 컨트롤러(에서 호출한 어떤 메서드든)에 대해 글로벌한 설정을 할 수 있게됩니다. 
+* 특정 컨트롤러 내에 @ExceptionHandler라는 걸 사용하면 특정 컨트롤러의 예외처리하는 로직을 메서드 형태로 명시할 수 있습니다.
+*/
 
 @ControllerAdvice
 @ResponseBody
 @Slf4j
 public class ControllerExceptionHandler {
 
+    /**
+     *  javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
+     *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
+     *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
+     * @return
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         final List<ErrorResponse.FieldError> fieldErrors = getFieldErrors(e.getBindingResult());
+        log.info("[ControllerExceptionHandler][handleMethodArgumentNotValidException] fieldErrors : "+fieldErrors);
         return buildFieldErrors(ErrorCode.INVALID_INPUT_VALUE, fieldErrors);
     }
 
+    /**
+     * @ModelAttribute 으로 binding error 발생시 BindException 발생한다.
+     * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args
+     * @return
+     */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse handleBindException(org.springframework.validation.BindException e) {
         final List<ErrorResponse.FieldError> fieldErrors = getFieldErrors(e.getBindingResult());
+        log.info("[ControllerExceptionHandler][handleBindException] fieldErrors : "+fieldErrors);
+
         return buildFieldErrors(ErrorCode.INVALID_INPUT_VALUE, fieldErrors);
     }
 
+    
 
     private List<ErrorResponse.FieldError> getFieldErrors(BindingResult bindingResult) {
         final List<FieldError> errors = bindingResult.getFieldErrors();

@@ -74,15 +74,12 @@ public class PublicController {
             RedirectAttributes redirectAttributes) throws Exception {
         log.info("[PublicController][join] Start");
 
-        if (dto.getEmail() == null || !dto.getEmail().contains("@")) {
-            throw new MethodArgumentNotValidException(null, new BeanPropertyBindingResult(dto, "userDto"));
-        }
-
         if (bindingResult.hasErrors()) {
             // 유효성 검사 오류가 있는 경우
-            log.info("[PublicController][join] 유효성 검사 오류: {}", bindingResult.getAllErrors());
+            log.info("[PublicController][join] 유효성 검사 오류: {}" + bindingResult.getAllErrors());
             redirectAttributes.addAttribute("error", true);
-            return "redirect:/joinPage";
+            throw new MethodArgumentNotValidException(null, bindingResult);
+            // return "redirect:/joinPage";
         }
 
         userService.joinUser(dto);

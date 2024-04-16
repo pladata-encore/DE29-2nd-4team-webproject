@@ -3,18 +3,14 @@ package com.mini.emoti.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mini.emoti.model.dto.PostDto;
-import com.mini.emoti.model.dto.UserDto;
 import com.mini.emoti.service.PostService;
 import com.mini.emoti.service.UserService;
 
@@ -36,13 +32,14 @@ public class UserController {
      * 로그인한 경우만
      */
 
-     // UserDto를 json으로 반환하기 위해 @ResponseBody라는 어노테이션 추가 
-    //  @GetMapping( "/find/name/{userName}")
-    //  public @ResponseBody ResponseEntity<UserDto> findByUserNamerWithResponseEntity(@PathVariable("userName") String userName) throws Exception {
-    //      return ResponseEntity.ok(userService.findByUserName(userName));
-    //  }
+    // UserDto를 json으로 반환하기 위해 @ResponseBody라는 어노테이션 추가
+    // @GetMapping( "/find/name/{userName}")
+    // public @ResponseBody ResponseEntity<UserDto>
+    // findByUserNamerWithResponseEntity(@PathVariable("userName") String userName)
+    // throws Exception {
+    // return ResponseEntity.ok(userService.findByUserName(userName));
+    // }
 
-     
     @GetMapping("mypage")
     public String mypage(Authentication authentication, Model model) {
 
@@ -63,45 +60,27 @@ public class UserController {
         log.info("[PostController][viewPost] start");
         if (authentication == null) {
             return "redirect:/index";
-        }
-        List<PostDto> postDtos;
-        try {
-            postDtos = postService.viewAllPost();
+
+        } else {
+            List<PostDto> postDtos = postService.viewAllPost();
 
             if (!postDtos.isEmpty()) {
                 log.info("[PostController][viewPost] postDtos : " + postDtos);
-
-                model.addAttribute("postDtos", postDtos);
+                model.addAttribute("postDtos", postDtos != null ? postDtos : null);
+                model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
 
             }
-
-            model.addAttribute("postLength", postDtos != null ? postDtos.size() : 0);
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            model.addAttribute("postDtos", null);
-            model.addAttribute("postLength", null);
-
-            e.printStackTrace();
-        }
-        if (authentication != null) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
 
             model.addAttribute("email", username);
-            try {
-                model.addAttribute("user_nickname",
-                        userService.findByEmail(username).getNickname());
-                log.info("[PostController][viewPost] nickname : " +
-                        userService.findByEmail(username).getNickname());
+            model.addAttribute("user_nickname",
+                    userService.findByEmail(username).getNickname());
+            log.info("[PostController][viewPost] nickname : " +
+                    userService.findByEmail(username).getNickname());
 
-            } catch (Exception e) {
-                // TODO Auto-generatzed catch block
-                e.printStackTrace();
-            }
-
+            return "member/index";
         }
-        return "member/index";
     }
 
     // 로그아웃
@@ -115,16 +94,15 @@ public class UserController {
         return "redirect:/index";
     }
 
-
-    // 인증 
+    // 인증
     @GetMapping("aouthPage")
     public String user(HttpServletRequest request, Model model) {
         log.info("[UserController][user] Start");
 
         HttpSession session = request.getSession();
 
-        // 인증 확인!! -> 로그인 유무 확인 
-        if(session.getAttribute("userId") == null) {
+        // 인증 확인!! -> 로그인 유무 확인
+        if (session.getAttribute("userId") == null) {
             return "redirect:/loginPage";
         }
 
@@ -133,19 +111,19 @@ public class UserController {
         return "user";
     }
 
-    // 인가 
+    // 인가
     @GetMapping("adminPage")
     public String admin(HttpServletRequest request, Model model) {
         log.info("[UserController][admin] Start");
 
         HttpSession session = request.getSession();
 
-        // 인증 확인!! -> 로그인 유무 확인 
-        if(session.getAttribute("userId") == null) {
+        // 인증 확인!! -> 로그인 유무 확인
+        if (session.getAttribute("userId") == null) {
             return "redirect:/loginPage";
-        } 
-        // 인가 확인!! -> 관리자 유무 확인 
-        else if(!session.getAttribute("userRole").equals("admin")) {
+        }
+        // 인가 확인!! -> 관리자 유무 확인
+        else if (!session.getAttribute("userRole").equals("admin")) {
             return "redirect:/aouthPage";
         }
 

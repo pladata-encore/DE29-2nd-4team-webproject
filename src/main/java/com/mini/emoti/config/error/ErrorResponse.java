@@ -6,8 +6,8 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
-
-//https://studyandwrite.tistory.com/502
+// https://studyandwrite.tistory.com/502
+// https://velog.io/@leehyeonmin34/exception-handling
 
 @Getter
 public class ErrorResponse {
