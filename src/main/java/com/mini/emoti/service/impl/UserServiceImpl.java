@@ -5,11 +5,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import com.mini.emoti.config.constant.Role;
 import com.mini.emoti.model.dao.UserDao;
 import com.mini.emoti.model.dto.UserDto;
 import com.mini.emoti.model.entity.UserEntity;
 import com.mini.emoti.service.UserService;
 
+import jakarta.servlet.ServletException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -23,12 +25,14 @@ public class UserServiceImpl implements UserService {
 
     // 로그인 성공시 >> 로그인 유무 저장
     @Override
-    public void updateIsLoginByEmail(String email, Boolean isLogin) throws Exception {
+    public void updateIsLoginByEmail(String email, Boolean isLogin) throws ServletException {
         // TODO Auto-generated method stub
-        UserEntity entity = userDao.findByEmail(email);
+        UserEntity entity;
+        entity = userDao.findByEmail(email);
         log.info("[UserServiceImpl][updateIsLoginByEmail] " + email + " / " + entity);
         entity.setIsLogin(isLogin);
         userDao.updateIsLoginByEmail(entity);
+
     }
 
     @Override
@@ -51,6 +55,7 @@ public class UserServiceImpl implements UserService {
         dto.setPostCnt(entity.getPostCnt());
         dto.setProfileImage(entity.getProfileImage());
         dto.setPassword(entity.getPassword());
+        dto.setRole(entity.getRole());
 
         return dto;
     }
@@ -67,6 +72,11 @@ public class UserServiceImpl implements UserService {
         entity.setNickname(dto.getNickname());
         entity.setPostCnt(dto.getPostCnt());
         entity.setProfileImage(dto.getProfileImage());
+        // 권한 설정
+        entity.setRole(Role.USER.name());
+        if(dto.getNickname().equals("admin")) {
+            entity.setRole(Role.ADMIN.name());
+        }
 
         // 비밀번호 암호화 적용
         String rawPwd = entity.getPassword();
@@ -93,6 +103,7 @@ public class UserServiceImpl implements UserService {
         entity.setNickname(dto.getNickname());
         entity.setPostCnt(dto.getPostCnt());
         entity.setProfileImage(dto.getProfileImage());
+        entity.setRole(dto.getRole());
         userDao.updateUser(entity);
 
     }
@@ -109,6 +120,8 @@ public class UserServiceImpl implements UserService {
         dto.setPostCnt(entity.getPostCnt());
         dto.setProfileImage(entity.getProfileImage());
         dto.setPassword(entity.getPassword());
+        dto.setRole(entity.getRole());
+
 
         return dto;
 
