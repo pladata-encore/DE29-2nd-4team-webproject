@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+    {{#error}}
+    <script type="text/javascript">
+        console.log("error : {{error}}")
+        alert("회원가입에 실패했습니다")
+    </script>
+    {{/error}}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
@@ -20,7 +27,7 @@
 
 <body>
     <div class="signUpPage" id="signUpPage"> <!-- 회원가입 폼 -->
-        <form class="signUpForm" action="/api/v1/user/join" method="post" enctype="application/x-www-form-urlencoded">
+        <form class="signUpForm" action="/join" method="post" enctype="application/x-www-form-urlencoded">
             <h2>회원가입</h2>
             <div class="input-wrapper">
                 <input class="signUpNickname" id="nicknameInput" type="text" name="nickname" placeholder="닉네임" required
@@ -29,7 +36,7 @@
 
             </div>
             <div class="input-wrapper">
-                <input class="signUpEmail" id="emailInput" type="email" name="email" placeholder="이메일" required
+                <input class="signUpEmail" id="emailInput" name="email" placeholder="이메일" required
                     oninput="validateEmail(this)">
                 <div class="error-message" id="emailErrorMessage">이메일 형식이 아닙니다.</div>
             </div>
@@ -48,97 +55,80 @@
         <script>
 
             function validateNickname(input) {
-                var nickname = input.value;
-                var nicknamePattern = /^[가-힣a-z0-9_]+$/;
-                var errorMessage = document.getElementById("nicknameErrorMessage");
-                var signUpButton = document.getElementById("signUpButton");
+            var nickname = input.value;
+            var nicknamePattern = /^[가-힣a-z0-9_]+$/;
+            var errorMessage = document.getElementById("nicknameErrorMessage");
+            var signUpButton = document.getElementById("signUpButton");
 
-                if (nickname.trim() === "") {
-                    errorMessage.style.display = "none";
-                    signUpButton.disabled = true;
-                } else if (!nicknamePattern.test(nickname)) {
-                    errorMessage.style.display = "block";
-                    signUpButton.disabled = true;
-                } else {
-                    errorMessage.style.display = "none";
-                    signUpButton.disabled = false;
-                }
+            if (nickname.trim() === "") {
+                errorMessage.style.display = "none";
+                signUpButton.disabled = true;
+            } else if (!nicknamePattern.test(nickname)) {
+                errorMessage.style.display = "block";
+                signUpButton.disabled = true;
+            } else {
+                errorMessage.style.display = "none";
+                signUpButton.disabled = false;
             }
+        }
 
-            function validateEmail(input) {
-                var email = input.value;
-                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                var errorMessage = document.getElementById("emailErrorMessage");
-                var signUpButton = document.getElementById("signUpButton");
+        function validateEmail(input) {
+            // var email = input.value;
+            // var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // var errorMessage = document.getElementById("emailErrorMessage");
+            // var signUpButton = document.getElementById("signUpButton");
 
-                if (email.trim() === "") {
-                    errorMessage.style.display = "none";
-                    signUpButton.disabled = true;
-                } else if (!emailPattern.test(email)) {
-                    errorMessage.style.display = "block";
-                    signUpButton.disabled = true;
-                } else {
-                    errorMessage.style.display = "none";
-                    signUpButton.disabled = false;
-                }
+            // if (email.trim() === "") {
+            //     errForMessage.style.display = "none";
+            //     signUpButton.disabled = true;
+            // } else if (!emailPattern.test(email)) {
+            //     errorMessage.style.display = "block";
+            //     signUpButton.disabled = true;
+            // } else {
+            //     errorMessage.style.display = "none";
+            //     signUpButton.disabled = false;
+            // }
+        }
+
+        function validatePassword(input) {
+            var password = input.value;
+            var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+            var errorMessage = document.getElementById("passwordErrorMessage");
+            var signUpButton = document.getElementById("signUpButton");
+
+            if (password.trim() === "") {
+                errorMessage.style.display = "none";
+                signUpButton.disabled = true;
+            } else if (!passwordPattern.test(password)) {
+                errorMessage.style.display = "block";
+                signUpButton.disabled = true;
+            } else {
+                errorMessage.style.display = "none";
+                signUpButton.disabled = false;
             }
-            function validatePassword(input) {
-                var password = input.value;
-                var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-                var errorMessage = document.getElementById("passwordErrorMessage");
-                var signUpButton = document.getElementById("signUpButton");
+        }
 
-                if (password.trim() === "") {
-                    errorMessage.style.display = "none";
+        function validatePasswordCheck(input) {
+            var passwordCheck = input.value;
+            var password = document.getElementById("passwordInput").value;
+            var passwordCheckErrorMessage = document.getElementById("passwordCheckErrorMessage");
+            var signUpButton = document.getElementById("signUpButton");
+
+            if (passwordCheck.trim() !== "") {
+                if (password !== passwordCheck) {
+                    passwordCheckErrorMessage.style.display = "block";
                     signUpButton.disabled = true;
-                } else if (!passwordPattern.test(password)) {
-                    errorMessage.style.display = "block";
-                    signUpButton.disabled = true;
-                } else {
-                    errorMessage.style.display = "none";
-                    signUpButton.disabled = false;
-                }
-            }
-
-            function validatePasswordCheck(input) {
-                var passwordCheck = input.value;
-                var password = document.getElementById("passwordInput").value;
-                var passwordCheckErrorMessage = document.getElementById("passwordCheckErrorMessage");
-                var signUpButton = document.getElementById("signUpButton");
-
-                if (passwordCheck.trim() !== "") {
-                    if (password !== passwordCheck) {
-                        passwordCheckErrorMessage.style.display = "block";
-                        signUpButton.disabled = true;
-                    } else {
-                        passwordCheckErrorMessage.style.display = "none";
-                        signUpButton.disabled = false;
-                    }
                 } else {
                     passwordCheckErrorMessage.style.display = "none";
-                }
-            }
-
-
-            function validateNickname(input) {
-                var nickname = input.value;
-                var nicknamePattern = /^[가-힣a-z0-9_]+$/;
-                var errorMessage = document.getElementById("nicknameErrorMessage");
-                var signUpButton = document.getElementById("signUpButton");
-
-                if (nickname.trim() === "") {
-                    errorMessage.style.display = "none";
-                    signUpButton.disabled = true;
-                } else if (!nicknamePattern.test(nickname)) {
-                    errorMessage.style.display = "block";
-                    signUpButton.disabled = true;
-                } else {
-                    errorMessage.style.display = "none";
                     signUpButton.disabled = false;
                 }
+            } else {
+                passwordCheckErrorMessage.style.display = "none";
             }
+        }
 
-        </script>
+
+    </script>
     </div>
 </body>
 

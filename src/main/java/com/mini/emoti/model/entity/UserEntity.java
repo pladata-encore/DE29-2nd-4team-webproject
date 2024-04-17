@@ -3,6 +3,7 @@ package com.mini.emoti.model.entity;
 import java.util.List;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.mini.emoti.config.BaseEntity;
 
@@ -34,20 +35,18 @@ public class UserEntity extends BaseEntity {
     @Id
     @NotBlank
     @Email(message = "올바른 이메일 형식이 아닙니다.")
-    // @Column(unique = true)
     private String email; // ID
 
     // nickname
     @NotBlank
-    @Pattern(regexp = "^[가-힣a-z0-9_]+$", message = "닉네임은 한글, 영어 소문자, 숫자, 밑줄(_)만 포함할 수 있습니다.")
-    @Column(unique = true, length = 10)
+    @Pattern(regexp = "^[가-힣a-z0-9_]+$", message = "닉네임은 한글, 영어 소문자, 숫자, 밑줄(_)만 포함할 수 있습니다. (12 글자 제한)")
+    @Column(unique = true, length = 12)
     private String nickname;
 
     // pw
     // @Size(min = 6, max = 10, message = "비밀번호는 최소 6자에서 최대 10자여야 합니다.")
     @NotBlank(message = "비밀번호는 필수입니다.")
-    // @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message =
-    // "비밀번호는 적어도 하나의 영문자와 하나의 숫자를 포함해야 합니다. 최소 6자 이상이어야 합니다.")
+    // @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]*$", message = "비밀번호는 적어도 하나의 영문자와 하나의 숫자를 포함해야 합니다.")
     private String password; // PW
 
     // 감정 개수
@@ -67,6 +66,9 @@ public class UserEntity extends BaseEntity {
     // 로그인 유무
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean isLogin;
+
+    // 일반사용자 / 관리자를 구분용
+    private String role; 
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<PostEntity> posts;

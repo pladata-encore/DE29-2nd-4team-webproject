@@ -38,25 +38,9 @@ public class LoginAuthFailureHandler extends SimpleUrlAuthenticationFailureHandl
         int code = authenticationTypes.getCode();
         log.error("message: " + errorMessage + " / code: " + code);
 
-        errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); /*
-                                                                  * 한글 인코딩 깨진 문제 방지
-                                                                  */
+        errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); 
+        
         setDefaultFailureUrl("/loginPage?errorMessage=" + errorMessage);
-
-        // String errorMessage = URLEncoder.encode(exception.getMessage(), "UTF-8");
-        // int code = authenticationTypes.getCode();
-
-        // log.error("message: "+errorMessage+" / code: "+code);
-
-        // URL에 인코딩된 에러 메시지를 쿼리 파라미터로 전달
-        // String errorRedirectUrl = "/loginPage?errorMessage=" + errorMessage;
-
-        // 요청 페이지를 유지하면서 에러 메시지만 전달
-        // response.sendRedirect(errorRedirectUrl);
-
-        // 클라이언트에게 에러 메시지를 전송
-        // response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        // response.getWriter().write(errorMessage);
 
     }
 
