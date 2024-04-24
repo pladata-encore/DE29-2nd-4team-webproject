@@ -20,9 +20,9 @@
 | 구성원 | 깃허브 주소 | 분담 역할 |
 | --- | --- | --- |
 | 장윤영 | https://github.com/Jyundev | JAVA Spring Boot RESTful API 생성  <br>  Spring Security, Exception 처리|
-| 조하민 | https://github.com/chohaming | JAVA Spring Boot RESTful API 생성 <br> HTML, CSS, Java Script 이용 웹페이지 개발|
-| 김도한 | https://github.com/rlaehgks115 | HTML, CSS, Java Script 이용 웹페이지 개발|
-| 김백운 | https://github.com/ | HTML, CSS, Java Script 이용 웹페이지 개발
+| 조하민 | https://github.com/chohaming | JAVA Spring Boot RESTful API 생성 <br> HTML, CSS, JavaScript 이용한 웹페이지 개발|
+| 김도한 | https://github.com/rlaehgks115 | HTML, CSS, JavaScript 이용한 웹페이지 개발|
+| 김백운 | https://github.com/ | HTML, CSS, JavaScript 이용한 웹페이지 개발
 
 
 </br></br>
