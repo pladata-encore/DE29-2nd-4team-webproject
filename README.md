@@ -3,7 +3,7 @@
 ## 📝 프로젝트 개요 
 이 프로젝트는 사용자들이 감정을 공유할 수 있는 커뮤니티를 통해 사용자의 일별 감정 데이터를 수집하고, 이를 기반으로 사용자의 감정 변화를 분석하는 것을 목표로 합니다. Spring Boot를 활용하여 REST API 서버를 구축하였으며, HTML 및 CSS를 이용하여 웹 페이지를 개발하였습니다.
 
->EMOTI = Emotion + Emoticon
+>**EMOTI = Emotion + Emoticon**
 
 </br></br>
 
@@ -18,10 +18,7 @@
 
 | 구성원 | 깃허브 주소 | 분담 역할 |
 | --- | --- | --- |
-| 장윤영 | ht
-
-</br></br>
-tps://github.com/Jyundev | REST API 구축  <br>  Spring Security, Exception 처리|
+| 장윤영 | https://github.com/Jyundev | REST API 구축  <br>  Spring Security, Exception 처리|
 | 조하민 | https://github.com/chohaming | REST API 구축 <br>  프론트엔드 개발|
 | 김도한 | https://github.com/rlaehgks115 |Emoti UI 디자인 및  프론트엔드 개발 |
 | 김백운 | https://github.com/kimbw0615 | Emoti UI  디자인 및 프론트엔드  개발
