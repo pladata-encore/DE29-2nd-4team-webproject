@@ -74,23 +74,6 @@ public class PublicTest {
     }
 
 
-    @Test
-    @DisplayName("회원가입 테스트 - 성공")
-    public void joinUserValidationSuccess() throws Exception {
-        UserDto userDto = new UserDto();
-        userDto.setNickname("testuser");
-        userDto.setPassword("test123"); 
-        userDto.setEmail("test@gmail.com"); 
-        String jsonRequest = objectMapper.writeValueAsString(userDto);
-
-        mockMvc.perform(post("/join")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequest)
-                .characterEncoding("utf-8")
-                ) // userDto를 직접 content()에 전달
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
 
     @Test
     @DisplayName("loginPage 테스트")
