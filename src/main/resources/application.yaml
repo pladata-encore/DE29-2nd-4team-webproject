@@ -1,3 +1,54 @@
+spring:
+  profiles:
+    active: local
+    group:
+      local: local, common, secret
+      blue: blue, common, secret
+      green: green, common, secret
+
+server:
+  env: blue
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+server:
+  port: 8080
+  serverAddress: localhost
+
+serverName: local_server
+
+---
+spring:
+  config:
+    activate:
+      on-profile: blue
+
+server:
+  port: 8080
+  serverAddress: 43.203.53.45
+
+serverName: blue_server
+
+---
+spring:
+  config:
+    activate:
+      on-profile: green
+
+server:
+  port: 8081
+  serverAddress: 43.203.53.45
+
+serverName: green_server
+
+---
+
+
 server:
   servlet:
     encoding:
@@ -10,14 +61,13 @@ spring:
   output:
     ansi:
       enabled: always 
-
   # 데이터 베이스 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/examplesdb?userSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-    username: urstory
-    password: u1234
+    url: jdbc:mysql://fpdb.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/fpdb
+    username: fpdb
+    password: qwerasdf1!
     driver-class-name: com.mysql.cj.jdbc.Driver
- 
+
   # sql:
   #   init:
   #     mode: always
@@ -28,9 +78,9 @@ spring:
     hibernate:
       ddl-auto: update 
     properties:
+      properties:
       hibernate:
-        show_sql: true 
-        format_sql: true 
+        dialect: org.hibernate.dialect.MySQLDialect
         
     # defer-datasource-initialization: true
         
