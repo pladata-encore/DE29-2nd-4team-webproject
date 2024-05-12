@@ -32,6 +32,7 @@ public class HealthCheckController {
         responseData.put("serverAddress", serverAddress);
         responseData.put("serverPort", serverPort);
         responseData.put("env", env);
+        responseData.put("name", "MING");
         return ResponseEntity.ok(responseData);
     }
 
