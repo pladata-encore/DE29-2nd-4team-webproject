@@ -14,11 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install JDK 11
+      - name: Install JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: '21'
+          distribution: 'adopt'
 
       - name: Build with Gradle
         run: |
@@ -76,7 +76,7 @@ jobs:
         with:
           url: http://${{ secrets.LIVE_SERVER_IP }}:${{env.STOPPED_PORT}}/env
           max-attempts: 3
-          retry-delay: 100s
+          retry-delay: 10s
 
       - name: Change nginx upstream
         uses: appleboy/ssh-action@master
