@@ -63,8 +63,8 @@ spring:
       enabled: always 
   # 데이터 베이스 
   datasource:
-    url: jdbc:mysql://fpdb.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/fpdb
-    username: fpdb
+    url: jdbc:mysql://fp.c1mucyw28eav.ap-northeast-2.rds.amazonaws.com:3306/fp
+    username: fp
     password: qwerasdf1!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
