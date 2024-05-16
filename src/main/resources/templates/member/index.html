@@ -454,8 +454,8 @@
                 console.log("current user : " + nickname);
                 console.log('postId:', postId);
 
-                if (commentNickname == nickname ) {
-                    console.log("nickname : "+nickname);
+                if (commentNickname == nickname) {
+                    console.log("nickname : " + nickname);
 
                     // 사용자의 닉네임과 댓글의 닉네임이 동일한 경우 수정 및 삭제 버튼을 표시함
                     const buttons = comment.querySelector('.comment-buttons');
@@ -466,8 +466,8 @@
 
                 `;
                     buttons.style.display = 'block'; // 버튼 보이게 설정
-                }else if(commentNickname != nickname | nickname == 'admin'){
-                    console.log("nickname : "+nickname);
+                } else if (commentNickname != nickname | nickname == 'admin') {
+                    console.log("nickname : " + nickname);
 
                     // 사용자의 닉네임과 댓글의 닉네임이 동일한 경우 수정 및 삭제 버튼을 표시함
                     const buttons = comment.querySelector('.comment-buttons');
