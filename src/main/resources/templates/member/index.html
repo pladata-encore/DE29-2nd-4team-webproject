@@ -223,7 +223,7 @@
             popup.style.display = "block";
             overlay.style.display = "block";
             currentPopup = popup;
-            document.getElementById("graphPopupFrame").src = "" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/user/graphs"; // 두 번째 HTML 페이지를 로드
+            document.getElementById("graphPopupFrame").src = "/user/graphs"; // 두 번째 HTML 페이지를 로드
         }
 
         function closeGraphPopup() {
