@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 멋진 웹사이트</title>
-    <link rel="icon" href="/static/img/main/화남.png" type="image/png">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +28,7 @@
 
             // 회원가입 성공 여부에 따라 팝업 열기
             if (success === 'true') {
-                document.getElementById("popupFrame").src = "http://52.79.109.11/loginPage"; // 두 번째 HTML 페이지를 로드
+                document.getElementById("popupFrame").src = "/loginPage"; // 두 번째 HTML 페이지를 로드
 
 
             } else {
@@ -204,7 +203,7 @@
                     popup.style.display = "block";
                     overlay.style.display = "block";
                     currentPopup = popup;
-                    document.getElementById("popupFrame").src = "http://52.79.109.11/loginPage"; // 두 번째 HTML 페이지를 로드
+                    document.getElementById("popupFrame").src = "/loginPage"; // 두 번째 HTML 페이지를 로드
                 }
 
                 function closePopup() {
@@ -213,7 +212,7 @@
                     popup.style.display = "none";
                     overlay.style.display = "none";
                     currentPopup = null;
-                    window.location.href = "http://52.79.109.11/user/index?login_success=true";
+                    window.location.href = "/user/index?login_success=true";
                 }
 
             </script>
