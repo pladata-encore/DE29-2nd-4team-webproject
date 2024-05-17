@@ -29,7 +29,7 @@
 
             // 회원가입 성공 여부에 따라 팝업 열기
             if (success === 'true') {
-                document.getElementById("popupFrame").src = "http://" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/loginPage"; // 두 번째 HTML 페이지를 로드
+                document.getElementById("popupFrame").src = "https://" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/loginPage"; // 두 번째 HTML 페이지를 로드
 
 
             } else {
@@ -204,7 +204,7 @@
                     popup.style.display = "block";
                     overlay.style.display = "block";
                     currentPopup = popup;
-                    document.getElementById("popupFrame").src = "http://" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/loginPage"; // 두 번째 HTML 페이지를 로드
+                    document.getElementById("popupFrame").src = "https://" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/loginPage"; // 두 번째 HTML 페이지를 로드
                 }
 
                 function closePopup() {
@@ -213,7 +213,7 @@
                     popup.style.display = "none";
                     overlay.style.display = "none";
                     currentPopup = null;
-                    window.location.href = "http://" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/user/index?login_success=true";
+                    window.location.href = "https://" + ("localhost".equals(serverAddress) ? "localhost:8080" : serverAddress) + "/user/index?login_success=true";
                 }
 
             </script>
