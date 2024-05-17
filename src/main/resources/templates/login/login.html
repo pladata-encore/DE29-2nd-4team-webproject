@@ -16,6 +16,26 @@
             text-align: left;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // 서버 주소를 가져오는 함수
+        function fetchServerAddress() {
+            return $.get("/hc").then(response => {
+                return response.serverAddress;
+            });
+        }
+
+        // 페이지 로드 시 서버 주소를 가져와서 설정
+        window.onload = async function () {
+            const serverAddress = await fetchServerAddress();
+            const defaultAddress = "localhost";
+            window.baseUrl = (serverAddress === defaultAddress) ? "http://localhost:8080" : `http://${serverAddress}`;
+        };
+
+        function openJoinPopup() {
+            var popup = window.open(`${window.baseUrl}/joinPage`, "_self");
+        }
+    </script>
 </head>
 
 <body>
@@ -28,58 +48,11 @@
         <form class="loginForm" action="/login" method="post">
             <h2>로그인</h2>
             <div class="input-wrapper">
-                <input class="loginText" id="usernameInput" type="text" name="username" placeholder="아이디" required
-                    oninput="validateEmail(this)">
-                <div class="error-message" id="emailErrorMessage">이메일 형식이 아닙니다.</div>
+                <input class="loginText" id="usernameInput" type="text" name="username" placeholder="아이디" required>
             </div>
-            <input class="loginPassword" id="passwordInput" type="password" name="password" placeholder="비밀번호" required
-                oninput="validatePassword(this)">
-            <div class="error-message" id="passwordErrorMessage" style="margin-bottom: 5px;">비밀번호는 적어도 하나의 영문자와 하나의 숫자를
-                포해야합니다.</div>
-            <input class="loginSubmit" type="submit" value="로그인" id="loginButton" disabled>
-            <button class="signup-button" onclick="openJoinPopup()">회원가입</button>
-            <script>
-
-                function openJoinPopup() {
-                    var popup = window.open("https://localhost:8080/joinPage", "_self");
-                }
-
-                function validateEmail(input) {
-                    var email = input.value;
-                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    var errorMessage = document.getElementById("emailErrorMessage");
-                    var loginButton = document.getElementById("loginButton");
-
-                    if (email.trim() === "") {
-                        errorMessage.style.display = "none";
-                        loginButton.disabled = true;
-                    } else if (!emailPattern.test(email)) {
-                        errorMessage.style.display = "block";
-                        loginButton.disabled = true;
-                    } else {
-                        errorMessage.style.display = "none";
-                        loginButton.disabled = false;
-                    }
-                }
-
-                function validatePassword(input) {
-                    var password = input.value;
-                    var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-                    var errorMessage = document.getElementById("passwordErrorMessage");
-                    var loginButton = document.getElementById("loginButton");
-
-                    if (password.trim() === "") {
-                        errorMessage.style.display = "none";
-                        loginButton.disabled = true;
-                    } else if (!passwordPattern.test(password)) {
-                        errorMessage.style.display = "block";
-                        loginButton.disabled = true;
-                    } else {
-                        errorMessage.style.display = "none";
-                        loginButton.disabled = false;
-                    }
-                }
-            </script>
+            <input class="loginPassword" id="passwordInput" type="password" name="password" placeholder="비밀번호" required>
+            <input class="loginSubmit" type="submit" value="로그인">
+            <button class="signup-button" type="button" onclick="openJoinPopup()">회원가입</button>
             <div class="social-login">
                 <img src="/static/img/main/kakao.png" onclick="kakaoLogin()">
                 <img src="/static/img/main/naver.png" onclick="naverLogin()">
